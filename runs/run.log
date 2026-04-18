@@ -1,0 +1,97 @@
+[q00][narrow] How many repositories are in the sw30labs organization in total?
+  RAG  tok= 1106  turns=1  $0.0046  3.99s
+  WIKI tok=19604  turns=2  pages=2  $0.0617  5.55s
+[q01][narrow] What tool can I use to convert n8n workflow JSON exports into LangGraph Python s
+  RAG  tok=  859  turns=1  $0.0053  3.63s
+  WIKI tok=15644  turns=2  pages=1  $0.0515  6.85s
+[q02][narrow] Which repo detects affiliation bias and time-based latent behaviors in locally-h
+  RAG  tok= 1366  turns=1  $0.0055  2.82s
+  WIKI tok= 7518  turns=1  pages=0  $0.0247  5.28s
+[q03][narrow] How many NIST SP 800-53 controls does the OSCAL Agent Lab work with?
+  RAG  tok= 1273  turns=1  $0.0051  2.57s
+  WIKI tok=16481  turns=2  pages=2  $0.0524  4.88s
+[q04][narrow] What is the freshness threshold in days before a wiki page is considered stale?
+  RAG  tok=  763  turns=1  $0.0030  1.98s
+  WIKI tok=16459  turns=2  pages=1  $0.0508  3.26s
+[q05][narrow] Which tech stack has the most repos associated with it across the wiki?
+  RAG  tok= 1541  turns=1  $0.0054  2.9s
+  WIKI tok=18763  turns=2  pages=1  $0.0588  5.94s
+[q06][narrow] What model distillation demo uses Claude Sonnet as the teacher and Llama 3.1 8B 
+  RAG  tok=  912  turns=1  $0.0049  3.74s
+  WIKI tok=15714  turns=2  pages=1  $0.0515  7.55s
+[q07][narrow] Which repositories had their GitHub remote URLs updated due to upstream renames 
+  RAG  tok= 2323  turns=1  $0.0110  4.6s
+  WIKI tok=18634  turns=2  pages=1  $0.0608  8.9s
+[q08][narrow] What are the two analogies used to explain AI agent security governance in the p
+  RAG  tok= 1011  turns=1  $0.0042  2.43s
+  WIKI tok=23783  turns=3  pages=2  $0.0754  8.96s
+[q09][narrow] What vision-language model does the local PDF OCR engine use, and what GPU platf
+  RAG  tok=  909  turns=1  $0.0040  3.22s
+  WIKI tok=15639  turns=2  pages=1  $0.0494  6.59s
+[q10][branch] What OSCAL-related repositories does sw30labs maintain, and what does each one d
+  RAG  tok= 1743  turns=1  $0.0095  4.72s
+  WIKI tok=16238  turns=2  pages=1  $0.0552  10.41s
+[q11][branch] What local inference and MLX tools are available for vision-language tasks like 
+  RAG  tok= 1508  turns=1  $0.0083  5.03s
+  WIKI tok=17089  turns=2  pages=1  $0.0605  11.31s
+[q12][branch] How do the different developer tools handle document conversion — what formats c
+  RAG  tok= 1497  turns=1  $0.0081  6.36s
+  WIKI tok=27419  turns=3  pages=5  $0.0942  16.09s
+[q13][branch] What articles has Nicolas Cravino published about the hardware landscape for LLM
+  RAG  tok= 1447  turns=1  $0.0085  6.98s
+  WIKI tok=17358  turns=2  pages=3  $0.0621  14.51s
+[q14][branch] What pentesting-focused repositories exist and how do they differ in scope — fro
+  RAG  tok= 1833  turns=1  $0.0107  7.28s
+  WIKI tok=17037  turns=2  pages=1  $0.0603  13.91s
+[q15][branch] What agentic framework repos use AutoGen-style multi-agent patterns, and what do
+  RAG  tok= 1510  turns=1  $0.0059  3.16s
+  WIKI tok=16309  turns=2  pages=1  $0.0532  8.19s
+[q16][branch] What articles discuss zero trust principles applied to AI-generated code and mod
+  RAG  tok= 1151  turns=1  $0.0064  4.42s
+  WIKI tok=16579  turns=2  pages=2  $0.0571  11.31s
+[q17][branch] How does sw30labs approach model benchmarking and distillation on Apple Silicon 
+  RAG  tok= 1520  turns=1  $0.0088  5.08s
+  WIKI tok=27295  turns=3  pages=3  $0.0922  15.43s
+[q18][branch] What articles cover the threat landscape of autonomous AI agents — from the 72-h
+  RAG  tok= 1682  turns=1  $0.0084  5.31s
+  WIKI tok=17302  turns=2  pages=3  $0.0625  18.6s
+[q19][branch] What tools does sw30labs offer for OSCAL compliance-as-code workflows, including
+  RAG  tok= 1191  turns=1  $0.0069  5.26s
+  WIKI tok=26699  turns=3  pages=4  $0.0918  13.77s
+[q20][cross-branch] How does the OSCAL Agent Guardrails repo enforce compliance policies on LLM agen
+  RAG  tok= 1558  turns=1  $0.0084  6.76s
+  WIKI tok=17391  turns=2  pages=2  $0.0621  17.93s
+[q21][cross-branch] Which repositories use LangGraph and also appear in the AI Security & Pentesting
+  RAG  tok= 2426  turns=1  $0.0107  6.46s
+  WIKI tok=18633  turns=2  pages=2  $0.0642  14.37s
+[q22][cross-branch] If I want to build a local Apple Silicon pipeline that converts PDFs to markdown
+  RAG  tok= 1430  turns=1  $0.0084  7.21s
+  WIKI tok=18188  turns=2  pages=2  $0.0644  16.84s
+[q23][cross-branch] How does the concept of 'phantom controls' in AI-generated compliance reports co
+  RAG  tok=  901  turns=1  $0.0059  5.37s
+  WIKI tok=26404  turns=3  pages=4  $0.0906  19.48s
+[q24][cross-branch] What role do circuit breakers and HITL patterns play across both the autonomous 
+  RAG  tok= 1015  turns=1  $0.0065  7.78s
+  WIKI tok=48959  turns=5  pages=10  $0.1638  30.33s
+[q25][cross-branch] Can I use the DeepAgent Azure CLI coding assistant together with the OSCAL compl
+  RAG  tok= 1273  turns=1  $0.0060  4.06s
+  WIKI tok=16560  turns=2  pages=2  $0.0576  13.72s
+[q26][cross-branch] How does the zero trust approach recommended for AI-generated code relate to the
+  RAG  tok= 1240  turns=1  $0.0066  5.82s
+  WIKI tok=26649  turns=3  pages=4  $0.0919  19.41s
+[q27][cross-branch] Which developer tools repos could help auto-generate documentation for the pente
+  RAG  tok= 1181  turns=1  $0.0050  4.65s
+  WIKI tok=18213  turns=2  pages=2  $0.0642  17.25s
+[q28][cross-branch] How does the MLX distillation workflow on Apple Silicon connect to the article a
+  RAG  tok=  907  turns=1  $0.0054  4.83s
+  WIKI tok=28392  turns=3  pages=4  $0.0957  20.42s
+[q29][cross-branch] What is the total count of repositories across all five wiki categories, and whi
+  RAG  tok= 2017  turns=1  $0.0098  6.57s
+  WIKI tok=22286  turns=2  pages=5  $0.0786  15.97s
+{
+  "n": 30,
+  "rag_total_cost": 0.2074,
+  "wiki_total_cost": 2.0594,
+  "rag_avg_tokens": 1370,
+  "wiki_avg_tokens": 20308
+}

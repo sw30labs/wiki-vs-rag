@@ -1,0 +1,6 @@
+# ignore keys and caches
+.env
+__pycache__/
+*.pyc
+report/.cache/
+_private/

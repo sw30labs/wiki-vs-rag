@@ -1,0 +1,124 @@
+{
+  "overall": {
+    "rag": {
+      "n": 30,
+      "avg_total_tokens": 1370,
+      "median_total_tokens": 1320,
+      "avg_input_tokens": 1136,
+      "avg_output_tokens": 234,
+      "avg_turns": 1,
+      "avg_cost_usd": 0.00691,
+      "total_cost_usd": 0.2074,
+      "avg_latency_s": 4.83,
+      "avg_quality": 3.92,
+      "n_quality_scored": 29
+    },
+    "wiki": {
+      "n": 30,
+      "avg_total_tokens": 20308,
+      "median_total_tokens": 17790,
+      "avg_input_tokens": 19664,
+      "avg_output_tokens": 644,
+      "avg_turns": 2.3,
+      "avg_cost_usd": 0.06865,
+      "total_cost_usd": 2.0594,
+      "avg_latency_s": 12.77,
+      "avg_quality": 4.48,
+      "n_quality_scored": 29
+    }
+  },
+  "by_category": {
+    "narrow": {
+      "rag": {
+        "n": 10,
+        "avg_total_tokens": 1206,
+        "median_total_tokens": 1058,
+        "avg_input_tokens": 1065,
+        "avg_output_tokens": 141,
+        "avg_turns": 1,
+        "avg_cost_usd": 0.00531,
+        "total_cost_usd": 0.0531,
+        "avg_latency_s": 3.19,
+        "avg_quality": 4.54,
+        "n_quality_scored": 10
+      },
+      "wiki": {
+        "n": 10,
+        "avg_total_tokens": 16824,
+        "median_total_tokens": 16470,
+        "avg_input_tokens": 16554,
+        "avg_output_tokens": 270,
+        "avg_turns": 2,
+        "avg_cost_usd": 0.05371,
+        "total_cost_usd": 0.5371,
+        "avg_latency_s": 6.38,
+        "avg_quality": 4.7,
+        "n_quality_scored": 10
+      }
+    },
+    "branch": {
+      "rag": {
+        "n": 10,
+        "avg_total_tokens": 1508,
+        "median_total_tokens": 1509,
+        "avg_input_tokens": 1206,
+        "avg_output_tokens": 302,
+        "avg_turns": 1,
+        "avg_cost_usd": 0.00815,
+        "total_cost_usd": 0.0815,
+        "avg_latency_s": 5.36,
+        "avg_quality": 4.1,
+        "n_quality_scored": 10
+      },
+      "wiki": {
+        "n": 10,
+        "avg_total_tokens": 19932,
+        "median_total_tokens": 17196,
+        "avg_input_tokens": 19173,
+        "avg_output_tokens": 760,
+        "avg_turns": 2.3,
+        "avg_cost_usd": 0.06892,
+        "total_cost_usd": 0.6892,
+        "avg_latency_s": 13.35,
+        "avg_quality": 4.6,
+        "n_quality_scored": 10
+      }
+    },
+    "cross-branch": {
+      "rag": {
+        "n": 10,
+        "avg_total_tokens": 1395,
+        "median_total_tokens": 1256,
+        "avg_input_tokens": 1137,
+        "avg_output_tokens": 258,
+        "avg_turns": 1,
+        "avg_cost_usd": 0.00728,
+        "total_cost_usd": 0.0728,
+        "avg_latency_s": 5.95,
+        "avg_quality": 3.04,
+        "n_quality_scored": 9
+      },
+      "wiki": {
+        "n": 10,
+        "avg_total_tokens": 24168,
+        "median_total_tokens": 20460,
+        "avg_input_tokens": 23266,
+        "avg_output_tokens": 901,
+        "avg_turns": 2.6,
+        "avg_cost_usd": 0.08332,
+        "total_cost_usd": 0.8332,
+        "avg_latency_s": 18.57,
+        "avg_quality": 4.11,
+        "n_quality_scored": 9
+      }
+    }
+  },
+  "head_to_head_quality": {
+    "rag": 3,
+    "wiki": 19,
+    "tie": 7
+  },
+  "quality_diff_mean_wiki_minus_rag": 0.56,
+  "wiki_vs_rag_token_ratio": 14.8,
+  "wiki_vs_rag_cost_ratio": 9.9
+}

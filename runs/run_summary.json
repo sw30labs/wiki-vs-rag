@@ -1,0 +1,7 @@
+{
+  "n": 30,
+  "rag_total_cost": 0.2074,
+  "wiki_total_cost": 2.0594,
+  "rag_avg_tokens": 1370,
+  "wiki_avg_tokens": 20308
+}

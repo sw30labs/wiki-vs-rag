@@ -1,0 +1,61 @@
+id,category,agent,query,input_tokens,output_tokens,total_tokens,turns,cost_usd,latency_s,relevance,completeness,groundedness,quality_avg
+q00,narrow,rag,How many repositories are in the sw30labs organization in total?,1003,103,1106,1,0.004554,3.99,5,4,3,4.0
+q00,narrow,wiki,How many repositories are in the sw30labs organization in total?,19363,241,19604,2,0.061704,5.55,5,5,4,4.67
+q01,narrow,rag,What tool can I use to convert n8n workflow JSON exports into LangGraph Python scripts?,634,225,859,1,0.005277,3.63,5,4,5,4.67
+q01,narrow,wiki,What tool can I use to convert n8n workflow JSON exports into LangGraph Python scripts?,15265,379,15644,2,0.05148,6.85,5,5,5,5.0
+q02,narrow,rag,Which repo detects affiliation bias and time-based latent behaviors in locally-hosted LLMs?,1249,117,1366,1,0.005502,2.82,5,5,5,5.0
+q02,narrow,wiki,Which repo detects affiliation bias and time-based latent behaviors in locally-hosted LLMs?,7343,175,7518,1,0.024654,5.28,5,5,5,5.0
+q03,narrow,rag,How many NIST SP 800-53 controls does the OSCAL Agent Lab work with?,1165,108,1273,1,0.005115,2.57,5,4,5,4.67
+q03,narrow,wiki,How many NIST SP 800-53 controls does the OSCAL Agent Lab work with?,16234,247,16481,2,0.052407,4.88,5,4,3,4.0
+q04,narrow,rag,What is the freshness threshold in days before a wiki page is considered stale?,702,61,763,1,0.003021,1.98,5,5,5,5.0
+q04,narrow,wiki,What is the freshness threshold in days before a wiki page is considered stale?,16340,119,16459,2,0.050805,3.26,5,5,5,5.0
+q05,narrow,rag,Which tech stack has the most repos associated with it across the wiki?,1473,68,1541,1,0.005439,2.9,5,3,3,3.67
+q05,narrow,wiki,Which tech stack has the most repos associated with it across the wiki?,18553,210,18763,2,0.058809,5.94,5,5,4,4.67
+q06,narrow,rag,What model distillation demo uses Claude Sonnet as the teacher and Llama 3.1 8B as the student with LoRA fine-tuning?,731,181,912,1,0.004909,3.74,5,4,5,4.67
+q06,narrow,wiki,What model distillation demo uses Claude Sonnet as the teacher and Llama 3.1 8B as the student with LoRA fine-tuning?,15347,367,15714,2,0.051546,7.55,5,5,5,5.0
+q07,narrow,rag,Which repositories had their GitHub remote URLs updated due to upstream renames in the April 2026 hygiene pass?,1986,337,2323,1,0.011013,4.6,5,5,5,5.0
+q07,narrow,wiki,Which repositories had their GitHub remote URLs updated due to upstream renames in the April 2026 hygiene pass?,18223,411,18634,2,0.060834,8.9,5,5,5,5.0
+q08,narrow,rag,What are the two analogies used to explain AI agent security governance in the published article?,910,101,1011,1,0.004245,2.43,5,4,2,3.67
+q08,narrow,wiki,What are the two analogies used to explain AI agent security governance in the published article?,23445,338,23783,3,0.075405,8.96,5,4,2,3.67
+q09,narrow,rag,"What vision-language model does the local PDF OCR engine use, and what GPU platform does it require?",799,110,909,1,0.004047,3.22,5,5,5,5.0
+q09,narrow,wiki,"What vision-language model does the local PDF OCR engine use, and what GPU platform does it require?",15430,209,15639,2,0.049425,6.59,5,5,5,5.0
+q10,branch,rag,"What OSCAL-related repositories does sw30labs maintain, and what does each one do?",1390,353,1743,1,0.009465,4.72,5,4,4,4.33
+q10,branch,wiki,"What OSCAL-related repositories does sw30labs maintain, and what does each one do?",15694,544,16238,2,0.055242,10.41,5,5,5,5.0
+q11,branch,rag,What local inference and MLX tools are available for vision-language tasks like OCR and video analysis on Apple Silicon?,1196,312,1508,1,0.008268,5.03,5,3,5,4.33
+q11,branch,wiki,What local inference and MLX tools are available for vision-language tasks like OCR and video analysis on Apple Silicon?,16319,770,17089,2,0.060507,11.31,5,4,3,4.0
+q12,branch,rag,How do the different developer tools handle document conversion — what formats can they process and what do they output?,1195,302,1497,1,0.008115,6.36,4,2,5,3.67
+q12,branch,wiki,How do the different developer tools handle document conversion — what formats can they process and what do they output?,26423,996,27419,3,0.094209,16.09,5,5,4,4.67
+q13,branch,rag,"What articles has Nicolas Cravino published about the hardware landscape for LLM inference — ASICs, GPUs, custom silicon, and power grids?",1098,349,1447,1,0.00853,6.98,5,4,3,4.0
+q13,branch,wiki,"What articles has Nicolas Cravino published about the hardware landscape for LLM inference — ASICs, GPUs, custom silicon, and power grids?",16521,837,17358,2,0.062118,14.51,5,4,3,4.0
+q14,branch,rag,What pentesting-focused repositories exist and how do they differ in scope — from regulation tracking to autonomous testing to LLM integrity?,1403,430,1833,1,0.01066,7.28,5,4,5,4.67
+q14,branch,wiki,What pentesting-focused repositories exist and how do they differ in scope — from regulation tracking to autonomous testing to LLM integrity?,16270,767,17037,2,0.060315,13.91,5,5,4,4.67
+q15,branch,rag,"What agentic framework repos use AutoGen-style multi-agent patterns, and what do they generate?",1395,115,1510,1,0.00591,3.16,4,2,5,3.67
+q15,branch,wiki,"What agentic framework repos use AutoGen-style multi-agent patterns, and what do they generate?",15953,356,16309,2,0.053199,8.19,5,5,4,4.67
+q16,branch,rag,What articles discuss zero trust principles applied to AI-generated code and modern AI coding tools?,904,247,1151,1,0.006417,4.42,5,4,3,4.0
+q16,branch,wiki,What articles discuss zero trust principles applied to AI-generated code and modern AI coding tools?,15967,612,16579,2,0.057081,11.31,5,5,4,4.67
+q17,branch,rag,How does sw30labs approach model benchmarking and distillation on Apple Silicon locally?,1164,356,1520,1,0.008832,5.08,5,3,5,4.33
+q17,branch,wiki,How does sw30labs approach model benchmarking and distillation on Apple Silicon locally?,26438,857,27295,3,0.092169,15.43,5,5,5,5.0
+q18,branch,rag,What articles cover the threat landscape of autonomous AI agents — from the 72-hour civilization scenario to the intelligence event horizon to agent security governance?,1405,277,1682,1,0.008371,5.31,5,3,3,3.67
+q18,branch,wiki,What articles cover the threat landscape of autonomous AI agents — from the 72-hour civilization scenario to the intelligence event horizon to agent security governance?,16420,882,17302,2,0.06249,18.6,5,5,4,4.67
+q19,branch,rag,"What tools does sw30labs offer for OSCAL compliance-as-code workflows, including explaining OSCAL files, reviewing diffs, and generating compliance artifacts?",910,281,1191,1,0.006946,5.26,5,3,5,4.33
+q19,branch,wiki,"What tools does sw30labs offer for OSCAL compliance-as-code workflows, including explaining OSCAL files, reviewing diffs, and generating compliance artifacts?",25721,978,26699,3,0.091833,13.77,5,5,4,4.67
+q20,cross-branch,rag,"How does the OSCAL Agent Guardrails repo enforce compliance policies on LLM agents at runtime, and how does that relate to the agent orchestration patterns described in the Agentic Frameworks category?",1249,309,1558,1,0.008383,6.76,4,3,5,4.0
+q20,cross-branch,wiki,"How does the OSCAL Agent Guardrails repo enforce compliance policies on LLM agents at runtime, and how does that relate to the agent orchestration patterns described in the Agentic Frameworks category?",16560,831,17391,2,0.062145,17.93,5,5,4,4.67
+q21,cross-branch,rag,Which repositories use LangGraph and also appear in the AI Security & Pentesting category versus those in the Local Inference & MLX category?,2138,288,2426,1,0.010735,6.46,3,2,2,2.33
+q21,cross-branch,wiki,Which repositories use LangGraph and also appear in the AI Security & Pentesting category versus those in the Local Inference & MLX category?,17938,695,18633,2,0.064239,14.37,5,4,4,4.33
+q22,cross-branch,rag,"If I want to build a local Apple Silicon pipeline that converts PDFs to markdown and then runs compliance checks against NIST controls, which repos should I combine?",1085,345,1430,1,0.008431,7.21,3,2,4,3.0
+q22,cross-branch,wiki,"If I want to build a local Apple Silicon pipeline that converts PDFs to markdown and then runs compliance checks against NIST controls, which repos should I combine?",17370,818,18188,2,0.06438,16.84,5,5,3,4.33
+q23,cross-branch,rag,How does the concept of 'phantom controls' in AI-generated compliance reports connect to the OSCAL digital twin playground's drift detection capabilities?,633,268,901,1,0.00592,5.37,5,3,3,3.67
+q23,cross-branch,wiki,How does the concept of 'phantom controls' in AI-generated compliance reports connect to the OSCAL digital twin playground's drift detection capabilities?,25454,950,26404,3,0.090612,19.48,5,5,3,4.33
+q24,cross-branch,rag,What role do circuit breakers and HITL patterns play across both the autonomous agent security discussion and the one-person conglomerate article?,726,289,1015,1,0.006514,7.78,5,4,4,4.33
+q24,cross-branch,wiki,What role do circuit breakers and HITL patterns play across both the autonomous agent security discussion and the one-person conglomerate article?,47547,1412,48959,5,0.163821,30.33,5,4,3,4.0
+q25,cross-branch,rag,Can I use the DeepAgent Azure CLI coding assistant together with the OSCAL compliance-as-code playground to review security remediation diffs?,1091,182,1273,1,0.006004,4.06,3,2,4,3.0
+q25,cross-branch,wiki,Can I use the DeepAgent Azure CLI coding assistant together with the OSCAL compliance-as-code playground to review security remediation diffs?,15899,661,16560,2,0.057612,13.72,5,4,3,4.0
+q26,cross-branch,rag,How does the zero trust approach recommended for AI-generated code relate to the OSCAL Zero Trust Lens classification of SP 800-53 controls?,1001,239,1240,1,0.006589,5.82,3,2,5,3.33
+q26,cross-branch,wiki,How does the zero trust approach recommended for AI-generated code relate to the OSCAL Zero Trust Lens classification of SP 800-53 controls?,25650,999,26649,3,0.091935,19.41,4,4,3,3.67
+q27,cross-branch,rag,Which developer tools repos could help auto-generate documentation for the pentesting repositories like Strix Research or the agentic-ai-pentesting book companion?,1057,124,1181,1,0.005032,4.65,1,1,3,1.67
+q27,cross-branch,wiki,Which developer tools repos could help auto-generate documentation for the pentesting repositories like Strix Research or the agentic-ai-pentesting book companion?,17416,797,18213,2,0.064203,17.25,5,5,4,4.67
+q28,cross-branch,rag,How does the MLX distillation workflow on Apple Silicon connect to the article about frontier model access closing due to distillation attacks?,686,221,907,1,0.005374,4.83,,,,
+q28,cross-branch,wiki,How does the MLX distillation workflow on Apple Silicon connect to the article about frontier model access closing due to distillation attacks?,27518,874,28392,3,0.095664,20.42,,,,
+q29,cross-branch,rag,"What is the total count of repositories across all five wiki categories, and which tech stacks have the highest cross-category adoption?",1704,313,2017,1,0.009807,6.57,3,2,1,2.0
+q29,cross-branch,wiki,"What is the total count of repositories across all five wiki categories, and which tech stacks have the highest cross-category adoption?",21309,977,22286,2,0.078582,15.97,4,3,2,3.0

@@ -1,0 +1,6 @@
+{
+  "judge_input_tokens": 76048,
+  "judge_output_tokens": 4926,
+  "judge_cost_usd": 0.302,
+  "model": "claude-sonnet-4-6"
+}

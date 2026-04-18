@@ -1,0 +1,779 @@
+[
+  {
+    "path": "Home.md",
+    "title": "SW3.0 Labs \u2014 Organization Wiki",
+    "summary": "Knowledge base for all sw30labs repositories, organized by domain.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "Index.md",
+    "title": "Wiki Index \u2014 sw30labs",
+    "summary": "Central catalog of every wiki page and raw stub.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "Log.md",
+    "title": "Change Log \u2014 sw30labs Wiki",
+    "summary": "All significant additions and updates to the knowledge base.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "SCHEMA.md",
+    "title": "Wiki Schema \u2014 sw30labs",
+    "summary": "**Organization**: sw30labs",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "Sitemap-Stacks.md",
+    "title": "Wiki Sitemap \u2014 by Stack",
+    "summary": "Cross-cutting view of the sw30labs wiki: repos grouped by tech stack",
+    "tags": [
+      "meta"
+    ],
+    "category": ""
+  },
+  {
+    "path": "Sitemap.md",
+    "title": "Wiki Sitemap",
+    "summary": "Visual map of the sw30labs wiki.",
+    "tags": [
+      "meta"
+    ],
+    "category": ""
+  },
+  {
+    "path": "raw/72-hour-civilization-agents.stub.md",
+    "title": "The 72-Hour Civilization: How Autonomous AI Agents Are Rewriting the Security Playbook",
+    "summary": "Autonomous agents operate on distributed, decentralized infrastructure at machine speed without human oversight.",
+    "tags": [
+      "compliance",
+      "langgraph",
+      "security"
+    ],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/agent-stack.stub.md",
+    "title": "The Agent Stack",
+    "summary": "Interactive visualization of a 10-layer architecture for reliable AI agents.",
+    "tags": [],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/agentic-ai-pentesting.stub.md",
+    "title": "agentic ai pentesting.stub",
+    "summary": "Book companion repository for \"AI Agents in Cybersecurity\" by Nicolas Cravino.",
+    "tags": [],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/agentic-pentesting-layer7.stub.md",
+    "title": "Agentic AI Pentesting for Layer 7: The Executive Summary",
+    "summary": "AI agents excel at testing stateful workflows and business logic flaws.",
+    "tags": [
+      "langgraph",
+      "pentesting",
+      "security",
+      "zero-trust"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/agentic-pipeline-code-optional.stub.md",
+    "title": "Why Your Agentic AI Pipeline Might Not Need Code",
+    "summary": "Multi-stage editorial workflows can run as native skills instead of Python orchestration.",
+    "tags": [
+      "cli",
+      "langgraph",
+      "python"
+    ],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/ai-agent-security-governance.stub.md",
+    "title": "AI Agent Security Governance: From Emerging Startups to Enterprise Strategy",
+    "summary": "State-sponsored actors weaponized AI for autonomous cyberattacks.",
+    "tags": [
+      "compliance",
+      "langgraph",
+      "security"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/ai-generated-code-zero-trust.stub.md",
+    "title": "AI-Generated Code: A Zero Trust Approach",
+    "summary": "Security risks of AI-generated code and strategies to mitigate them through rigorous testing, peer review, and adherence to zero trust principles in software de",
+    "tags": [
+      "llm",
+      "security",
+      "zero-trust"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/ai-supply-chain-governance.stub.md",
+    "title": "The AI Supply Chain Is the Real Enterprise Bottleneck",
+    "summary": "Enterprise AI is limited by governance velocity.",
+    "tags": [
+      "compliance",
+      "oscal",
+      "security",
+      "zero-trust"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/animated-gif-creator.stub.md",
+    "title": "animated gif creator.stub",
+    "summary": "Creates animated GIFs from sequences of images in a folder or from MOV video files.",
+    "tags": [],
+    "category": "developer-tools"
+  },
+  {
+    "path": "raw/articles-published.stub.md",
+    "title": "articles published.stub",
+    "summary": "Collection of 22 published LinkedIn articles by Nicolas Cravino covering AI security, agentic systems, compliance automation, local inference hardware, and ente",
+    "tags": [],
+    "category": "developer-tools"
+  },
+  {
+    "path": "raw/asics-dethrone-gpus-llm.stub.md",
+    "title": "Will ASICs Dethrone GPUs for LLM Inference?",
+    "summary": "Examines whether Application-Specific Integrated Circuits can replace GPUs for LLM inference, considering customization challenges, memory requirements, and the",
+    "tags": [
+      "llm",
+      "local-inference"
+    ],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/asics-vs-gpus-grid.stub.md",
+    "title": "ASICs vs. GPUs was never the final boss. The grid is.",
+    "summary": "The real AI bottleneck is not silicon but power delivery.",
+    "tags": [
+      "llm",
+      "local-inference"
+    ],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/audiobook-generator.stub.md",
+    "title": "Audiobook Generator",
+    "summary": "Convert books to audiobooks using Qwen3-TTS and LangGraph.",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/autogen-doc-generator.stub.md",
+    "title": "autogen doc generator.stub",
+    "summary": "Analyzes code repositories and automatically generates comprehensive documentation using AI-powered agents.",
+    "tags": [],
+    "category": "developer-tools"
+  },
+  {
+    "path": "raw/autogen-mermaid-generator.stub.md",
+    "title": "autogen mermaid generator.stub",
+    "summary": "Generates Mermaid.js diagrams from source code using AI agents in a GroupChat structure.",
+    "tags": [],
+    "category": "developer-tools"
+  },
+  {
+    "path": "raw/autogen-requirements-agent.stub.md",
+    "title": "autogen requirements agent.stub",
+    "summary": "Experiment in strict JSON messaging between AI agents to generate and refine project requirements.",
+    "tags": [],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/automated-ai-news-workflow.stub.md",
+    "title": "How I Automated My AI News Workflow \u2013 In-House, Privacy-First, and Fully Agentic",
+    "summary": "Self-hosted agentic platform ingesting AI news, analyzing via specialized agents, writing in persona-matched voice via digital twin, validating QA, and deliveri",
+    "tags": [
+      "langgraph",
+      "mcp",
+      "python",
+      "security"
+    ],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/best-ai-unrestricted-access.stub.md",
+    "title": "Why the Best AI You'll Ever Have Unrestricted Access To Is the AI You Have Right Now",
+    "summary": "Frontier model access is closing due to distillation attacks and capability extraction.",
+    "tags": [
+      "compliance",
+      "langgraph",
+      "llm",
+      "security"
+    ],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/custom-silicon-gpt-story.stub.md",
+    "title": "Custom Silicon Is Coming for GPUs - But Is That the Whole Story?",
+    "summary": "OpenAI's recent partnerships with Cerebras, AMD, Samsung signal accelerating custom silicon adoption.",
+    "tags": [
+      "llm",
+      "local-inference"
+    ],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/deepagent-azure-cli.stub.md",
+    "title": "DeepAgent Azure CLI",
+    "summary": "Turnkey coding assistant CLI powered by LangChain DeepAgents and Azure OpenAI.",
+    "tags": [],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/deepseekvl2-pdf-ocr.stub.md",
+    "title": "deepseekvl2 pdf ocr.stub",
+    "summary": "Local PDF OCR engine using state-of-the-art DeepSeek-VL2 mixture-of-experts vision-language model on NVIDIA CUDA GPUs.",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/digital-twins-incident-response.stub.md",
+    "title": "Generative AI - Digital Twins for Proactive and Cost-Effective Enterprise Cybersecurity Incident Response Testing",
+    "summary": "Using AI-powered digital twins to simulate cybersecurity incidents before they occur, enabling organizations to improve incident response capabilities and minim",
+    "tags": [
+      "digital-twin",
+      "llm",
+      "security"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/gitnexus-fleet.stub.md",
+    "title": "gitnexus fleet.stub",
+    "summary": "Local runner that aggressively clones an entire GitHub repository fleet, automatically indexes all repositories with GitNexus (KuzuDB graph database), and start",
+    "tags": [],
+    "category": "developer-tools"
+  },
+  {
+    "path": "raw/intelligence-event-horizon.stub.md",
+    "title": "The Intelligence Event Horizon: Surviving the Autonomous Agent Revolution",
+    "summary": "AI agents have crossed capability inflection points in coding and mathematics.",
+    "tags": [
+      "compliance",
+      "langgraph",
+      "pentesting",
+      "security"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/local-mlx-responsesAPI-server.stub.md",
+    "title": "MLX Local Inference Server",
+    "summary": "OpenAI-compatible local inference server for Apple Silicon.",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/mlx-distillation-explained.stub.md",
+    "title": "MLX Distillation Explained",
+    "summary": "Educational PoC demonstrating model distillation from Claude Sonnet (teacher) to Llama 3.1 8B (student) via LoRA fine-tuning on Apple Silicon.",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/mlx-youtubescribe.stub.md",
+    "title": "MLX-YouTubeScribe",
+    "summary": "YouTube video/playlist transcription using local Whisper models.",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/n8n2langraph.stub.md",
+    "title": "N8n2LangGraph Converter",
+    "summary": "CLI tool that converts n8n workflow JSON exports into standalone LangGraph + LangChain Python scripts using OpenAI Responses API.",
+    "tags": [],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/nvd-extractor.stub.md",
+    "title": "nvd extractor.stub",
+    "summary": "Python script to extract critical vulnerabilities from the National Vulnerability Database (NVD) API with network attack vectors.",
+    "tags": [],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/ollama-pdf2markdown.stub.md",
+    "title": "ollama pdf2markdown.stub",
+    "summary": "Converts PDF files to Markdown by extracting pages as images and processing them through multimodal vision-language models locally via Ollama.",
+    "tags": [],
+    "category": "developer-tools"
+  },
+  {
+    "path": "raw/one-person-conglomerate-reality.stub.md",
+    "title": "The One-Person Conglomerate Is Real \u2014 But It's Not Actually One Person",
+    "summary": "Operating three fully autonomous agentic systems shows AI collapses transaction costs but requires HITL/HOTL/HIC maturity progression, circuit breakers, and a v",
+    "tags": [
+      "compliance",
+      "digital-twin",
+      "langgraph"
+    ],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/oscal-agent-guardrails.stub.md",
+    "title": "OSCAL Agent Guardrails",
+    "summary": "Uses OSCAL profiles as a policy brain to guardrail LLM agents at runtime.",
+    "tags": [],
+    "category": "oscal-compliance"
+  },
+  {
+    "path": "raw/oscal-agent-lab.stub.md",
+    "title": "OSCAL Agent Lab",
+    "summary": "Experimental lab for OSCAL + AI agents.",
+    "tags": [],
+    "category": "oscal-compliance"
+  },
+  {
+    "path": "raw/oscal-cac-playgd.stub.md",
+    "title": "OSCAL Compliance-as-Code Playground",
+    "summary": "CLI treating OSCAL as compliance-as-code: explain files, suggest remediation snippets, and review diffs with LLM.",
+    "tags": [],
+    "category": "oscal-compliance"
+  },
+  {
+    "path": "raw/oscal-digital-twin-playground.stub.md",
+    "title": "OSCAL Digital Twin Playground",
+    "summary": "OSCAL-powered digital twin playground with LangGraph agents.",
+    "tags": [],
+    "category": "oscal-compliance"
+  },
+  {
+    "path": "raw/oscal-phantom-compliance.stub.md",
+    "title": "From article to artefacts Vol 2 - When AI Agents Write Your regulatory Compliance Reports: The Urgent Reality of Phantom Controls",
+    "summary": "AI agents writing compliance artifacts risk generating false controls that pass validation yet don't exist.",
+    "tags": [
+      "compliance",
+      "langgraph",
+      "nist",
+      "oscal"
+    ],
+    "category": "oscal-compliance"
+  },
+  {
+    "path": "raw/oscal-zero-trust-lens.stub.md",
+    "title": "OSCAL Zero Trust Lens",
+    "summary": "Classifies NIST SP 800-53 Rev 5 controls into Zero Trust dimensions (identity, device, network, application, data, visibility/analytics, automation/orchestratio",
+    "tags": [],
+    "category": "oscal-compliance"
+  },
+  {
+    "path": "raw/osi-model-natural-language-layer.stub.md",
+    "title": "Do We Need a New Layer in the OSI Model for Natural Language?",
+    "summary": "Proposes a dedicated Natural Language Layer in the OSI model to address security and governance challenges of dynamic prompting in AI systems, preventing prompt",
+    "tags": [
+      "compliance",
+      "llm",
+      "security"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/pentest-regulatory-intel.stub.md",
+    "title": "pentest regulatory intel.stub",
+    "summary": "AI-powered CLI tool that automatically researches, stores, and manages a global inventory of penetration testing regulations for financial services across 20+ j",
+    "tags": [],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/projectpulse.stub.md",
+    "title": "ProjectPulse",
+    "summary": "Automated Intelligence Onboarding for SAP Implementations.",
+    "tags": [],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/qwen3-vl-python-ocr-script-mlx.stub.md",
+    "title": "Qwen3 VL OCR Script (MLX)",
+    "summary": "Batch caption every image in an input directory using a local MLX vision-language model (Qwen3-VL-30B).",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/qwenbench-mlx.stub.md",
+    "title": "QwenBench MLX",
+    "summary": "Single-script benchmarking suite for the entire Qwen 3.5 model family (0.8B \u2192 35B) on Apple Silicon via MLX.",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/repobundle.stub.md",
+    "title": "repobundle.stub",
+    "summary": "Pair of CLI utilities to export Git repositories to single text files and import them back.",
+    "tags": [],
+    "category": "developer-tools"
+  },
+  {
+    "path": "raw/revolutionizing-cyber-risk-advisory-ai.stub.md",
+    "title": "Revolutionizing Cyber Risk Advisory Services with Generative AI",
+    "summary": "Innovative AI-powered strategy to revolutionize traditional Cyber Risk Advisory practice by leveraging GPT model to accelerate proposal preparation, improve qua",
+    "tags": [
+      "compliance",
+      "llm",
+      "security"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/rise-agentic-security.stub.md",
+    "title": "The Rise of Agentic Security Consulting",
+    "summary": "From billable hours to outcome-driven trust.",
+    "tags": [
+      "compliance",
+      "langgraph",
+      "security"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/safeguarding-datasets-llm-era.stub.md",
+    "title": "Safeguarding Valuable Datasets in the LLM Era",
+    "summary": "Explores emerging security threats from malicious actors targeting valuable datasets used for LLM training, including knowledge bases, proprietary methodologies",
+    "tags": [
+      "compliance",
+      "llm",
+      "security"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/screenlens.stub.md",
+    "title": "ScreenLens",
+    "summary": "Local video scene intelligence for Apple Silicon.",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/sst-autoresearch.stub.md",
+    "title": "SST-AutoResearch",
+    "summary": "Speaker State Trajectory analysis via Karpathy-style autoresearch loop.",
+    "tags": [],
+    "category": "agentic-frameworks"
+  },
+  {
+    "path": "raw/strixresearch.stub.md",
+    "title": "strixresearch.stub",
+    "summary": "Comprehensive research and documentation repository for Strix \u2014 an autonomous AI-powered penetration testing platform.",
+    "tags": [],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/tars-ai.stub.md",
+    "title": "TARS-AI",
+    "summary": "LangGraph-powered conversational AI embodying TARS from Interstellar.",
+    "tags": [],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/transforming-crypto-mining-hardware.stub.md",
+    "title": "Transforming Obsolete Crypto Mining Hardware: A Community-Driven Approach to AI Model Training",
+    "summary": "Repurposing GPUs and FPGAs from crypto mining for distributed computing in AI research, inspired by SETI@home concept for sustainable and accessible AI model de",
+    "tags": [
+      "llm",
+      "local-inference"
+    ],
+    "category": "local-inference-mlx"
+  },
+  {
+    "path": "raw/tslit.stub.md",
+    "title": "tslit.stub",
+    "summary": "Sandboxed evaluation harness for detecting time-based latent behaviors and affiliation bias in local non-US-origin LLMs served through native llama.cpp runtimes",
+    "tags": [],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/understanding-agent-security-analogies.stub.md",
+    "title": "Understanding AI Agent Security: Two Analogies That Make It Click",
+    "summary": "Aviation and banking analogies clarify AI agent governance: build with certified components, manage identity with least privilege, secure credentials, define po",
+    "tags": [
+      "compliance",
+      "nist",
+      "security",
+      "zero-trust"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "raw/word-to-markdown-converter.stub.md",
+    "title": "word to markdown converter.stub",
+    "summary": "Converts Microsoft Word documents (.docx) to Markdown format preserving heading levels, bullet lists, and tables.",
+    "tags": [],
+    "category": "developer-tools"
+  },
+  {
+    "path": "raw/zero-trust-ai-coding-boom.stub.md",
+    "title": "Navigating the AI Coding Boom: Why Zero Trust Still Rules",
+    "summary": "AI coding tools like Windsurf, Cursor, and Claude Code are powerful but require zero-trust approach: vet all AI-generated code with security tools, peer review,",
+    "tags": [
+      "cli",
+      "llm",
+      "python",
+      "security",
+      "zero-trust"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "wiki/agentic-frameworks/agentic-frameworks.md",
+    "title": "Agentic Frameworks",
+    "summary": "Six repositories demonstrating diverse agentic AI patterns \u2014 from a mental model visualization (Agent Stack) through workflow conversion (N8n2LangGraph), coding",
+    "tags": [
+      "python",
+      "langgraph",
+      "langchain",
+      "azure",
+      "openai",
+      "mlx",
+      "audio",
+      "cli",
+      "stt",
+      "tts"
+    ],
+    "category": ""
+  },
+  {
+    "path": "wiki/ai-security/ai-security-pentesting.md",
+    "title": "AI Security & Pentesting",
+    "summary": "The sw30labs AI Security & Pentesting portfolio spans four repositories covering LLM integrity testing, regulatory intelligence for global pentest compliance, a",
+    "tags": [
+      "security",
+      "pentesting",
+      "langgraph",
+      "llm",
+      "mlx",
+      "local-inference"
+    ],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/agentic-ai-pentesting-for-layer-7-the.md",
+    "title": "[Agentic AI Pentesting for Layer 7: The Executive Summary](https://www.linkedin.com/pulse/agentic-ai-pentesting-layer-7-executive-summary-nicolas-cravino-qqj5e)",
+    "summary": "Published on 2026-02-03 19:16 Attackers don't need approvals, guardrails, or change windows.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/ai-agent-security-governance-from-emerging-startups.md",
+    "title": "[AI Agent Security Governance: From Emerging Startups to Enterprise Strategy](https://www.linkedin.com/pulse/ai-agent-security-governance-from-emerging-startups-strategy-cravino-nrqge)",
+    "summary": "Published on 2025-11-16 14:36 Back in April 2023, I published here in LinkedIn article envisioning how AI could revolutionize cyber risk advisory services.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/ai-generated-code-zero-trust.md",
+    "title": "[AI-Generated Code: A Zero Trust Approach](https://www.linkedin.com/pulse/ai-generated-code-zero-trust-approach-nicolas-cravino)",
+    "summary": "Published on 2023-05-24 10:26 In the realm of software development, AI models like ChatGPT from OpenAI are making waves.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/asics-vs-gpus-was-never-the-final.md",
+    "title": "[ASICs vs. GPUs was never the final boss. The grid is.](https://www.linkedin.com/pulse/asics-vs-gpus-never-final-boss-grid-nicolas-cravino-7s2ye)",
+    "summary": "Published on 2025-12-15 01:22 (Follow-up to: \u201c[Will ASICs Dethrone GPUs for LLM Inference?\u201d - July 12, 2024](https://www.linkedin.com/pulse/asics-dethrone-gpus-",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/custom-silicon-is-coming-for-gpus-but.md",
+    "title": "[Custom Silicon Is Coming for GPUs - But Is That the Whole Story?](https://www.linkedin.com/pulse/custom-silicon-coming-gpus-whole-story-nicolas-cravino-bribe)",
+    "summary": "Published on 2026-01-28 22:57 Back in July 2024, I asked: \"[*Will ASICs Dethrone GPUs for LLM Inference*](https://www.linkedin.com/pulse/asics-dethrone-gpus-llm",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/do-we-need-a-new-layer-in.md",
+    "title": "[Do We Need a New Layer in the OSI Model for Natural Language?](https://www.linkedin.com/pulse/do-we-need-new-layer-osi-model-natural-language-nicolas-cravino-e3eie)",
+    "summary": "Published on 2024-11-20 18:56 Over the past few years, I\u2019ve had the privilege of working on a variety of generative AI projects, ranging from applications that",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/from-article-to-artefacts-vol-2-when.md",
+    "title": "From article to artefacts Vol 2 - When AI Agents Write Your regulatory Compliance Reports: The Urgent Reality of Phantom Controls",
+    "summary": "Published on --- In May 2025, the Veterans Affairs submitted an OSCAL-formatted System Security Plan\u2014426 pages, 23,000+ lines of machine-readable JSON.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/generative-ai-digital-twins-for-proactive-and.md",
+    "title": "[Generative AI - Digital Twins for Proactive and Cost-Effective Enterprise Cybersecurity Incident Response Testing](https://www.linkedin.com/pulse/generative-ai-digital-twins-proactive-enterprise-incident-cravino-33jwe)",
+    "summary": "Published on 2023-12-22 17:21 As cyber threats continue to evolve at an alarming rate, organizations must stay ahead of the curve by adopting innovative solutio",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/how-i-automated-my-ai-news-workflow.md",
+    "title": "[\ud83d\ude80 How I Automated My AI News Workflow \u2013 In-House, Privacy-First, and Fully Agentic](https://www.linkedin.com/pulse/how-i-automated-my-ai-news-workflow-in-house-fully-agentic-cravino-ufb3e)",
+    "summary": "Published on 2025-06-21 16:43 Each morning my inbox bursts with AI headlines.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/navigating-the-ai-coding-boom-why-zero.md",
+    "title": "[Navigating the AI Coding Boom: Why Zero Trust Still Rules](https://www.linkedin.com/pulse/navigating-ai-coding-boom-why-zero-trust-still-rules-nicholas-cravino-m0vme)",
+    "summary": "Published on 2025-03-26 17:30 In a previous article, \u201c[AI-Generated Code: A Zero Trust Approach](https://www.linkedin.com/pulse/ai-generated-code-zero-trust-app",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/revolutionizing-cyber-risk-advisory-services-with-generative.md",
+    "title": "[Revolutionizing Cyber Risk Advisory Services with Generative AI](https://www.linkedin.com/pulse/revolutionizing-cyber-risk-advisory-services-ai-nicolas-cravino)",
+    "summary": "Published on 2023-04-23 22:12 This executive level white paper showcases an innovative, Generative AI-powered strategy to revolutionize the traditional Cyber Ri",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/safeguarding-datasets-llm-era.md",
+    "title": "[Safeguarding Valuable Datasets in the LLM Era](https://www.linkedin.com/pulse/safeguarding-valuable-datasets-llm-era-nicolas-cravino)",
+    "summary": "Published on 2023-06-23 01:49 In the ever-changing field of artificial intelligence, the significance of high-quality and unique datasets for training Language",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/the-72hour-civilization-how-autonomous-ai-agents.md",
+    "title": "[The 72-Hour Civilization: How Autonomous AI Agents Are Rewriting the Security Playbook](https://www.linkedin.com/pulse/72-hour-civilization-how-autonomous-ai-agents-security-cravino-ieyue)",
+    "summary": "Published on 2026-02-06 15:13 If you've been following the AI community over the last two weeks, you've likely felt the ground shift beneath your feet.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/the-ai-supply-chain-is-the-real.md",
+    "title": "[The AI Supply Chain Is the Real Enterprise Bottleneck](https://www.linkedin.com/pulse/ai-supply-chain-real-enterprise-bottleneck-nicolas-cravino-bpm5e)",
+    "summary": "Published on 2026-01-11 14:56 --- ***Enterprise AI is no longer limited by Compute capacity.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/the-intelligence-event-horizon-surviving-the-autonomous.md",
+    "title": "[The Intelligence Event Horizon: Surviving the Autonomous Agent Revolution](https://www.linkedin.com/pulse/intelligence-event-horizon-surviving-autonomous-agent-nicolas-cravino-1rqxe)",
+    "summary": "Published on 2026-02-02 11:41 Imagine a SOC analyst staring at a screen at 3:00 AM.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/the-oneperson-conglomerate-is-real-but-its.md",
+    "title": "[The One-Person Conglomerate Is Real \u2014 But It's Not Actually One Person](https://www.linkedin.com/pulse/one-person-conglomerate-real-its-actually-one-person-nicolas-cravino-2oixe)",
+    "summary": "Published on 2026-03-08 20:26 One person.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/the-rise-of-agentic-security-consulting.md",
+    "title": "The Rise of Agentic Security Consulting",
+    "summary": "Published on --- *From Billable Hours to Outcome-Driven Trust* A while back (April 2023), I explored how AI was reshaping [Cybersecurity Advisory](https://www.l",
+    "tags": [
+      "compliance",
+      "llm",
+      "cli",
+      "security"
+    ],
+    "category": "ai-security"
+  },
+  {
+    "path": "wiki/articles/timeline.md",
+    "title": "Articles Timeline",
+    "summary": "All articles from the sw30labs knowledge base, organized chronologically.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/transforming-obsolete-crypto-mining-hardware-a-communitydriven.md",
+    "title": "[Transforming Obsolete Crypto Mining Hardware: A Community-Driven Approach to AI Model Training](https://www.linkedin.com/pulse/transforming-obsolete-crypto-mining-hardware-approach-nicolas-cravino)",
+    "summary": "Published on 2023-05-09 11:20 The rise of ASIC-based mining has left GPU and FPGA-based farms struggling to compete due to increasing energy costs.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/understanding-ai-agent-security-two-analogies-that.md",
+    "title": "[Understanding AI Agent Security: Two Analogies That Make It Click](https://www.linkedin.com/pulse/understanding-ai-agent-security-two-analogies-make-click-cravino-nddde)",
+    "summary": "Published on 2026-02-21 15:52 If you work in cybersecurity - or anywhere near it - you've probably been asked the same questions I get asked all the time: *How",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/why-the-best-ai-youll-ever-have.md",
+    "title": "[Why the Best AI You'll Ever Have Unrestricted Access To Is the AI You Have Right Now](https://www.linkedin.com/pulse/why-best-ai-youll-ever-have-unrestricted-access-you-right-cravino-ckrye)",
+    "summary": "Published on 2026-02-24 04:45 Two weeks ago, I rebuilt an entire project as a native Claude skill in just two hours.",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/why-your-agentic-ai-pipeline-might-not.md",
+    "title": "[Why Your Agentic AI Pipeline Might Not Need Code](https://www.linkedin.com/pulse/why-your-agentic-ai-pipeline-might-need-code-nicolas-cravino-nhine)",
+    "summary": "Published on 2026-02-11 22:00 I built *Article Buddy* to solve a personal problem: I write long-form technical articles, and I wanted an AI-powered editorial pi",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/articles/will-asics-dethrone-gpus-for-llm-inference.md",
+    "title": "[Will ASICs Dethrone GPUs for LLM Inference ?](https://www.linkedin.com/pulse/asics-dethrone-gpus-llm-inference-nicolas-cravino-bfsue)",
+    "summary": "Published on 2024-07-12 10:06 In the world of large language models (LLMs) and artificial intelligence (AI), the quest for more efficient and powerful hardware",
+    "tags": [],
+    "category": ""
+  },
+  {
+    "path": "wiki/developer-tools/developer-tools.md",
+    "title": "Developer Tools",
+    "summary": "The Developer Tools category spans 7 repositories covering code intelligence (GitNexus Fleet), AI-powered documentation and diagram generation (AutoGen Doc Gene",
+    "tags": [
+      "python",
+      "cli",
+      "mcp",
+      "ocr",
+      "llm",
+      "openai"
+    ],
+    "category": ""
+  },
+  {
+    "path": "wiki/local-inference-mlx/local-inference-mlx.md",
+    "title": "Local Inference & MLX",
+    "summary": "Nine repositories forming a comprehensive local AI toolkit.",
+    "tags": [
+      "python",
+      "mlx",
+      "apple-silicon",
+      "local-inference",
+      "langgraph",
+      "tts",
+      "stt",
+      "audio",
+      "video",
+      "ocr",
+      "benchmark",
+      "fastapi",
+      "chromadb",
+      "lora",
+      "distillation"
+    ],
+    "category": ""
+  },
+  {
+    "path": "wiki/oscal-compliance/oscal-compliance.md",
+    "title": "OSCAL & Compliance",
+    "summary": "Five repositories exploring NIST OSCAL (Open Security Controls Assessment Language) through AI-powered agents.",
+    "tags": [
+      "oscal",
+      "nist",
+      "security",
+      "compliance",
+      "langgraph",
+      "langchain",
+      "zero-trust",
+      "digital-twin",
+      "rag",
+      "faiss"
+    ],
+    "category": ""
+  }
+]
