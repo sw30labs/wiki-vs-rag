@@ -1,48 +1,82 @@
 # Wiki-fed agents vs. RAG — a real experiment on the sw30labs wiki
 
-**TL;DR:** The common intuition that wiki-fed agents are *token-efficient* compared to RAG is **wrong for this corpus and this implementation**. Wiki navigation uses **~15× more tokens and costs ~10× more per query**. What it buys you is **meaningfully higher answer quality (+0.56 points on a 1–5 scale; 19W–3L–7T head-to-head)**, with the largest quality gap on hard cross-branch queries. The real trade-off is **cost vs. answer quality**, not efficiency.
+**TL;DR:** The first pass of this experiment compared *single-shot RAG* to a *multi-turn wiki-navigation agent* and concluded that wiki answers were higher quality but far more expensive. That framing was wrong. Adding a third agent — **agentic-RAG**, the same FAISS retrieval as single-shot RAG but wrapped in a multi-turn tool-call loop — closes almost the entire quality gap at **~40 % of wiki's token cost**. Head-to-head, agentic-RAG edges wiki 8–4 (18 ties). The real axis isn't *wiki vs. RAG*; it's **single-shot vs. agentic**. Most of wiki-nav's apparent quality edge came from the turn budget, not from having a sitemap.
 
 This repo is the reproducible source for those numbers.
 
-- **Corpus:** `github.com/sw30labs/.github.wiki` pinned at commit `c130a3b` (90 markdown files, ~45 K corpus tokens)
-- **Agent model:** Claude Sonnet 4.6 (temp 0) for both pipelines
-- **RAG stack:** OpenAI `text-embedding-3-small` + FAISS IndexFlatIP, top-k = 5, section-aware chunking (800-token window, 150-token overlap)
-- **Wiki stack:** precomputed hierarchical sitemap (5 364 tokens) + two tools: `read_page(path)`, `list_children(prefix)`; max 8 tool-call turns
+- **Corpus:** `github.com/sw30labs/.github.wiki` pinned at commit `c130a3b` (89 markdown files, ~45 K corpus tokens)
+- **Agent model:** Claude Sonnet 4.6 (temp 0) for all three pipelines
+- **Single-shot RAG:** OpenAI `text-embedding-3-small` + FAISS IndexFlatIP, top-k = 5, section-aware chunking (800-token window, 150-token overlap), one Claude call
+- **Agentic-RAG:** same FAISS index, wrapped in a ≤8-turn tool-call loop; tools are `retrieve(query, k)` and `read_full_page(path)`
+- **Wiki navigation:** precomputed hierarchical sitemap (5 364 tokens) + `read_page(path)` / `list_children(prefix)` tools; ≤8 turns
 - **Eval:** 30 synthesized day-to-day queries (10 narrow / 10 branch / 10 cross-branch) with ground-truth source paths
-- **Judge:** Claude Sonnet 4.6 as blind LLM-judge, randomized A/B ordering, scoring relevance + completeness + groundedness (1–5 each)
+- **Judge:** Claude Opus 4.7 as LLM-judge, absolute 1–5 scoring on relevance + completeness + groundedness
 
 ## Results
 
 ### Headline numbers
 
-| Metric                    | RAG        | Wiki navigation | Ratio (Wiki / RAG) |
-|---------------------------|------------|-----------------|--------------------|
-| Avg total tokens / query  | **1 370**  | **20 308**      | **14.8×**          |
-| Avg cost / query          | **$0.0069**| **$0.0687**     | **9.9×**           |
-| Avg latency / query       | 4.8 s      | 12.8 s          | 2.7×               |
-| Avg turns                 | 1.0        | 2.3             | —                  |
-| Avg quality (1–5)         | **3.92**   | **4.48**        | +0.56              |
-| Head-to-head quality wins | 3          | 19              | (7 ties)           |
+| Metric                   |      RAG | Agentic-RAG | Wiki nav | Agentic vs RAG | Wiki vs RAG |
+|--------------------------|---------:|------------:|---------:|---------------:|------------:|
+| Avg total tokens / query |    1 359 |       7 730 |   18 373 |         5.7×   |     13.5×   |
+| Avg cost / query         | $0.0068  |  $0.0307    | $0.0616  |         4.5×   |      9.1×   |
+| Avg latency / query      |   5.0 s  |    13.2 s   |  11.5 s  |         —      |        —    |
+| Avg turns                |   1.0    |     2.8     |   2.1    |         —      |        —    |
+| Avg quality (1–5)        |   4.48   |     4.73    |   4.69   |     **+0.25**  |    +0.21    |
+
+### Head-to-head (quality wins over 30 queries, ties within ±0.17 on 1–5 scale)
+
+| Pairing                  | A wins | B wins | Ties | Mean Δ (B − A) |
+|--------------------------|-------:|-------:|-----:|---------------:|
+| RAG  vs  Agentic-RAG     |      5 |   **8**|   17 |     +0.26      |
+| RAG  vs  Wiki nav        |      7 |   **9**|   14 |     +0.21      |
+| Agentic-RAG  vs  Wiki nav| **8**  |      4 |   18 |     −0.04      |
+
+Agentic-RAG is the only agent on the Pareto frontier: it matches wiki on quality while costing half as much, and it beats single-shot RAG on quality for ~4.5× the per-query cost.
 
 ### By query category
 
-| Category     | RAG tokens | Wiki tokens | RAG quality | Wiki quality |
-|--------------|-----------:|------------:|------------:|-------------:|
-| narrow       |      1 206 |      16 824 |       4.54  |        4.70  |
-| branch       |      1 508 |      19 932 |       4.10  |        4.60  |
-| cross-branch |      1 395 |      24 168 |       3.04  |        4.11  |
+| Category     | RAG tokens | Agentic tokens | Wiki tokens | RAG q | Agentic q | Wiki q |
+|--------------|-----------:|---------------:|------------:|------:|----------:|-------:|
+| narrow       |      1 091 |          3 026 |      12 500 |  5.00 |      5.00 |   5.00 |
+| branch       |      1 576 |         10 176 |      19 975 |  4.37 |      4.57 |   4.43 |
+| cross-branch |      1 411 |          9 987 |      22 644 |  4.07 |      4.63 |   4.63 |
 
-The quality gap is tiny on narrow queries (+0.16) and grows as the question spans more of the wiki, reaching +1.07 on cross-branch. **This is the most important finding of the experiment.**
+The quality gap that looked like wiki's win on cross-branch queries (+0.56 over single-shot RAG) is matched exactly by agentic-RAG. Every quality point wiki earned on the hard queries, agentic-RAG also earned — at less than half the tokens.
 
 ![tokens by category](report/tokens_by_category.png)
 ![quality by category](report/quality_by_category.png)
 ![tokens vs quality scatter](report/tokens_vs_quality.png)
 
-### What drives wiki's token cost
+## Example queries
 
-The 5 364-token sitemap is paid on **every** query as baseline input. The wiki agent then loads one or more whole pages (averaging ~2 000 tokens each) via tool calls — each tool result gets added to the next turn's input. With a mean of 2.3 turns and 2.0 pages read per query, input tokens dominate.
+Two queries from the run, shown as comparative evidence. Full per-query records in `runs/runs.jsonl` and `runs/judgments.jsonl`.
 
-RAG, by contrast, retrieves 5 small section-aware chunks (~80 tokens each, ~400 tokens total) and makes a single call.
+### `q24` — cross-branch, where the gap shows up
+
+> **If I want to build a digital-twin-based incident response simulation, which article frames the concept and which OSCAL repo implements the drift detection?**
+>
+> Ground truth: `wiki/articles/generative-ai-digital-twins-for-proactive-and.md`, `raw/oscal-digital-twin-playground.stub.md`, `wiki/oscal-compliance/oscal-compliance.md`
+
+| Agent        | Quality | Tokens | Cost    | Notes |
+|--------------|--------:|-------:|--------:|-------|
+| RAG          |    3.00 |  1 429 | $0.0076 | Missed the article entirely; said "there isn't a dedicated article" and hedged. Top-5 chunks didn't surface it. |
+| Agentic-RAG  |    4.67 |  4 267 | $0.0189 | After the first retrieve, refined and got both the article and the repo correctly. |
+| Wiki nav     |    5.00 | 16 854 | $0.0568 | Same answer as agentic-RAG; paid 4× the tokens to get there. |
+
+### `q00` — narrow, where all three tie
+
+> **Which tool extracts critical CVEs with network attack vectors from the NVD API?**
+>
+> Ground truth: `raw/nvd-extractor.stub.md`
+
+| Agent        | Quality | Tokens | Cost    | Notes |
+|--------------|--------:|-------:|--------:|-------|
+| RAG          |    5.00 |  1 207 | $0.0049 | One call, right answer. |
+| Agentic-RAG  |    5.00 |  3 257 | $0.0122 | Same answer, 2 turns. |
+| Wiki nav     |    5.00 |  7 451 | $0.0237 | Answered straight from the sitemap summary without opening a page. |
+
+On narrow questions the retrieval substrate barely matters; all three tie and RAG is ~5× cheaper than wiki.
 
 ## Scope boundaries (important)
 
@@ -50,29 +84,57 @@ RAG, by contrast, retrieves 5 small section-aware chunks (~80 tokens each, ~400 
 
 **What it deliberately excludes** (per the brief):
 - Building the wiki itself (one-time curator effort)
-- Building the RAG index (one-time; logged separately — $0.0009 for this corpus, 9.7 s)
+- Building the RAG index (one-time; logged separately — $0.0009 for this corpus, 9.1 s)
 
 Setup costs are one-offs any production team pays once; they're out of scope for a steady-state comparison.
 
+## What the numbers don't measure
+
+Per-query cost and quality are only part of the picture. Three axes the benchmark ignores but a production decision shouldn't:
+
+- **Operational surface.** Wiki-nav is a sitemap parser plus a two-tool loop — markdown files in git, nothing else underneath. RAG is a chunker, an embedder, a vector store, and a loop, with tuning knobs (chunk size, top-k, embed model) each needing their own evaluation. That's more dependencies, more failure modes (embedding-API outage, vector-store corruption, version skew between embed model and index), and more portability friction when you move providers or self-host. Wiki-nav survives anything `git clone` + an LLM client survives.
+- **Dual-surface value.** A wiki is a human-readable product on day one — GitHub renders it, people browse it, contributors open PRs against it. A FAISS index is machine-only; to give humans the same access you build a second product (search UI, chat frontend).
+- **Incremental updates.** Wiki update = edit markdown, `git push`, done — the next query sees the new content. RAG update = re-chunk, re-embed, re-upsert into the vector store. Small edits get expensive unless you implement delta-indexing.
+
+Agentic-RAG wins on $/query. It doesn't automatically win when you add the cost of *building* a RAG stack, *maintaining* its index, and *separately* building the human-readable surface the wiki gave you for free.
+
+### Tradeoff shape — the whole picture on one chart
+
+![tradeoff radar — measured and qualitative axes overlaid](report/tradeoff_radar.png)
+
+Three measured axes (Quality, Cost efficiency, Latency) min-max normalized across the three agents, and three qualitative axes (Operational simplicity, Human-readable surface, Update velocity) author-scored 0–1. Outer = better on every axis.
+
+Each pipeline's strength lives in a different region of the chart:
+
+- **RAG (orange)** — spike on Cost + Latency, collapsed on the qualitative axes.
+- **Agentic-RAG (green)** — spike on Quality, mid-tier on Cost, worst on Latency, collapsed on the qualitative axes.
+- **Wiki nav (blue)** — wide coverage of the qualitative half of the chart, moderate Quality, weak Cost + Latency.
+
+Raw values behind the normalized axes: Quality — RAG 4.48, Agentic-RAG 4.73, Wiki 4.69 (spread of 0.25 on a 1–5 scale, so the Quality spike visually exaggerates a small real-world gap). Cost/query — $0.0068 / $0.0307 / $0.0616. Latency — 5.0 s / 13.2 s / 11.5 s.
+
+![qualitative axes heatmap](report/qualitative_heatmap.png)
+
+Close-up of the three qualitative axes. RAG and agentic-RAG score the same on all three because they share the FAISS / embedding substrate; the operational story doesn't change when you wrap RAG in a loop.
+
 ## Honest caveats
 
-- **Corpus-specific.** The sw30labs wiki is small (45 K tokens) and beautifully structured. Well-structured wikis flatter RAG on narrow queries (retrieval finds the one right chunk instantly) and flatter wiki on cross-branch ones (the map lets the agent reason about relationships). A sprawling, unstructured corpus would likely favor RAG even more.
-- **Implementation-specific.** The wiki agent here is the **naive** pattern: full sitemap up-front, whole-page reads. Several optimizations are on the table (see below) that would close the token gap — none were implemented for this experiment.
-- **Single model.** Results may shift with smaller/cheaper models or different providers.
-- **LLM-as-judge has biases** even with blinded A/B ordering. A human cross-graded subset would strengthen the quality numbers; this experiment does not include one.
-- **Judge uses Sonnet, not Opus.** A cheaper and slightly weaker judge. Running the same scoring with Opus is one line-change in `eval/judge.py`.
-- **One parse failure.** Query `q28`'s judge output didn't parse as JSON (Sonnet emitted a preamble). 29 of 30 queries contribute to quality stats.
+Adding the agentic-RAG baseline closed the most load-bearing methodological gap (single-shot-vs-agentic confound) but the remaining caveats are real:
 
-## Optimizations that would change the verdict
+- **Evaluation circularity.** Queries were synthesized by Opus *with the sitemap in its context* and ground-truth source paths were produced by the same synthesis call. The sitemap-primed synthesizer plausibly biases toward questions the wiki agent can answer cleanly. This isn't just bias — it's a leak. A follow-up with a sitemap-blind synthesizer would tighten the finding.
+- **Statistical rigor.** n = 10 per category, single run, single seed, single judge (Claude judging Claude). No confidence intervals, no bootstrap, no significance tests. The gap between agentic-RAG and single-shot RAG (+0.25) is real; the gap between agentic-RAG and wiki (−0.04) is inside likely-noise. Treat these as directional, not rigorous.
+- **Corpus-specific.** The sw30labs wiki is small (45 K tokens) and well-structured. Sprawling, unstructured corpora would likely favor RAG variants further; corpora with rich taxonomy might favor wiki.
+- **Implementation-specific.** The RAG stack is vanilla `text-embedding-3-small` + top-k FAISS. No reranker, no hybrid BM25, no query expansion. Most of agentic-RAG's remaining loss to wiki on the hardest queries likely lives here. This experiment does not test those knobs.
+- **No failure taxonomy.** Point-estimate quality only; no breakdown of *why* RAG lost the ones it lost (hallucination vs. retrieval miss vs. incomplete citation), no p95 latency, no separate hallucination-rate metric, no cost-per-*correct*-answer.
+- **Single model family.** Judge and agents are all Anthropic; Claude-judging-Claude has known intra-family preferences. A second-judge cross-check (e.g., GPT-4 or a human subset) is not included.
+- **Operational concerns unmodeled.** Throughput / rate-limit shape, multi-tenant ACL filtering, sitemap maintenance decay, update-latency when pages change — all out of scope.
 
-These are **not** implemented here but are the obvious next steps if token cost is the blocker:
+## What to do with this
 
-1. **Prompt caching for the sitemap.** Anthropic's prompt caching (`cache_control`) would amortize the 5 364-token sitemap across a warm session. In a long-lived assistant this alone could cut wiki input tokens by ~30 %.
-2. **Two-level sitemap.** Show only categories up front; have the agent call `list_children(category)` on demand. More turns, less input per turn.
-3. **Section-level reads.** Replace `read_page(path)` with `read_section(path, heading)`. Closes most of the gap — but also starts to look a lot like RAG.
-4. **Hybrid: wiki for routing, RAG inside the chosen branch.** The real productionization. The wiki chooses which subtree; RAG retrieves within it. Reduces sitemap overhead *and* scales to large corpora.
+If the production decision is RAG-or-wiki for a day-to-day assistant over a wiki-shaped corpus, the finding is: **don't pick wiki for the quality edge alone — wrap RAG in an agentic loop and you get the same quality at half the cost.** Wiki-nav still wins on readability of the trace (sitemap + page reads is easier to explain than embedding hits) and may win on corpora where titles and hierarchy carry most of the signal.
 
-A follow-up experiment comparing these variants would be more informative than tuning either side in isolation.
+Two natural next experiments:
+1. **Hybrid routing.** Wiki picks the subtree, RAG retrieves inside it. Should drop the sitemap cost while preserving agentic-RAG's quality.
+2. **Reranker ablation.** Add a Cohere-style cross-encoder reranker on top of agentic-RAG; the cross-branch queries are where this should pay off.
 
 ## Reproduction
 
@@ -88,7 +150,7 @@ pip install -r requirements.txt   # openai anthropic faiss-cpu tiktoken pyyaml n
 cp .env.example .env  && $EDITOR .env   # fill in OPENAI_API_KEY, ANTHROPIC_API_KEY
 source .env
 
-# 4. run everything (~7 min, ~$3-4 of API spend)
+# 4. run everything (~10 min, ~$8 of API spend)
 make all
 ```
 
@@ -100,40 +162,44 @@ All raw per-query logs are in `runs/runs.jsonl` and `runs/judgments.jsonl`. Ever
 
 ```
 wiki-vs-rag/
-├── README.md                  (this file)
-├── Makefile                   (make all / make eval / make report)
-├── corpus/                    (wiki pinned at c130a3b)
+├── README.md                   (this file)
+├── Makefile                    (make all / make eval / make report)
+├── corpus/                     (wiki pinned at c130a3b)
 ├── rag/
-│   ├── chunker.py             (section-aware markdown chunker)
-│   ├── indexer.py             (one-time: embed + build FAISS)
-│   └── agent.py               (query-time: embed → top-k → Claude)
+│   ├── chunker.py              (section-aware markdown chunker)
+│   ├── indexer.py              (one-time: embed + build FAISS)
+│   └── agent.py                (query-time: embed → top-k → one Claude call)
+├── rag_agentic/
+│   └── agent.py                (query-time: Claude + retrieve/read_full_page tools, ≤8 turns)
 ├── wiki/
-│   ├── sitemap.py             (one-time: build hierarchical map)
-│   └── agent.py               (query-time: Claude + read_page/list_children tools)
+│   ├── sitemap.py              (one-time: build hierarchical map)
+│   └── agent.py                (query-time: Claude + read_page/list_children tools, ≤8 turns)
 ├── eval/
-│   ├── synthesize.py          (Opus generates 30 queries + ground truths)
-│   ├── run.py                 (runs both pipelines over the query set)
-│   ├── judge.py               (blind LLM-judge, randomized A/B)
-│   └── queries.jsonl          (the 30 queries — committed for reproducibility)
-├── runs/                      (raw per-query logs)
+│   ├── synthesize.py           (Opus 4.7 generates 30 queries + ground truths)
+│   ├── run.py                  (runs all three pipelines over the query set)
+│   ├── judge.py                (Opus 4.7 judge, absolute 1-5 scoring)
+│   └── queries.jsonl           (the 30 queries — committed for reproducibility)
+├── runs/                       (raw per-query logs)
 │   ├── runs.jsonl
 │   └── judgments.jsonl
 └── report/
-    ├── summary.json           (aggregate stats)
-    ├── results.csv            (row per (query, agent))
-    └── *.png                  (charts)
+    ├── summary.json            (aggregate stats)
+    ├── results.csv             (row per (query, agent))
+    └── *.png                   (charts)
 ```
 
 ## Cost of running this experiment
 
-| Phase                          | Cost       |
-|--------------------------------|-----------:|
-| RAG index build (one-time)     | $0.0009    |
-| Sitemap build (no LLM)         | $0.0000    |
-| Query synthesis (Opus × 30)    | $1.03      |
-| Eval runs (Sonnet × 60)        | $2.27      |
-| Judge (Sonnet × 30)            | $0.30      |
-| **Total**                      | **$3.60**  |
+| Phase                                | Cost       |
+|--------------------------------------|-----------:|
+| RAG index build (one-time)           | $0.0009    |
+| Sitemap build (no LLM)               | $0.0000    |
+| Query synthesis (Opus 4.7 × 30)      | $1.35      |
+| Eval runs — RAG (Sonnet × 30)        | $0.20      |
+| Eval runs — Agentic-RAG (Sonnet × 30)| $0.92      |
+| Eval runs — Wiki (Sonnet × 30)       | $1.85      |
+| Judge (Opus 4.7 × 90)                | $3.98      |
+| **Total**                            | **~$8.30** |
 
 ## Author
 

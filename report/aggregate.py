@@ -1,6 +1,7 @@
 """Aggregate runs + judgments into CSV + PNG charts + headline JSON."""
 from __future__ import annotations
-import os, json, csv
+import os, json, csv, math
+from itertools import combinations
 from pathlib import Path
 import statistics as st
 
@@ -8,9 +9,121 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+AGENTS = ["rag", "rag_agentic", "wiki"]
+AGENT_LABELS = {"rag": "RAG", "rag_agentic": "Agentic-RAG", "wiki": "Wiki nav"}
+AGENT_COLORS = {"rag": "#d97706", "rag_agentic": "#059669", "wiki": "#2563eb"}
+TIE_THRESHOLD = 0.17  # ≈0.5 on any one axis; matches original setting
+
+# Qualitative scores for axes the benchmark does NOT measure. 0-1, higher=better.
+# wiki is the natural winner on all three (infra-free, human-readable, git-push updates).
+# rag and rag_agentic share the same FAISS/embedding substrate, so they score the same.
+QUALITATIVE_SCORES = {
+    "operational_simplicity": {"rag": 0.25, "rag_agentic": 0.25, "wiki": 1.0},
+    "human_readable_surface": {"rag": 0.10, "rag_agentic": 0.10, "wiki": 1.0},
+    "update_velocity":        {"rag": 0.20, "rag_agentic": 0.20, "wiki": 1.0},
+}
+QUALITATIVE_AXIS_LABELS = {
+    "operational_simplicity": "Operational simplicity",
+    "human_readable_surface": "Human-readable surface",
+    "update_velocity":        "Update velocity",
+}
+
 
 def load(p: Path) -> list[dict]:
     return [json.loads(l) for l in p.read_text().splitlines() if l.strip()]
+
+
+def _tradeoff_radar_data(summary: dict) -> dict:
+    """Build the 6-axis radar dataset: 3 measured (min-max normalized across agents) + 3 scored."""
+    overall = summary["overall"]
+
+    def minmax_higher_better(vals: dict[str, float]) -> dict[str, float]:
+        lo, hi = min(vals.values()), max(vals.values())
+        return {k: (v - lo) / (hi - lo) if hi > lo else 0.5 for k, v in vals.items()}
+
+    def minmax_lower_better(vals: dict[str, float]) -> dict[str, float]:
+        lo, hi = min(vals.values()), max(vals.values())
+        return {k: 1 - (v - lo) / (hi - lo) if hi > lo else 0.5 for k, v in vals.items()}
+
+    q = minmax_higher_better({a: overall[a]["avg_quality"] for a in AGENTS})
+    c = minmax_lower_better({a: overall[a]["avg_cost_usd"] for a in AGENTS})
+    l = minmax_lower_better({a: overall[a]["avg_latency_s"] for a in AGENTS})
+
+    return {
+        agent: {
+            "Quality":                q[agent],
+            "Cost efficiency":        c[agent],
+            "Latency":                l[agent],
+            "Update velocity":        QUALITATIVE_SCORES["update_velocity"][agent],
+            "Human-readable surface": QUALITATIVE_SCORES["human_readable_surface"][agent],
+            "Operational simplicity": QUALITATIVE_SCORES["operational_simplicity"][agent],
+        }
+        for agent in AGENTS
+    }
+
+
+def _draw_radar(radar_data: dict, overall: dict, out_path: Path) -> None:
+    # Clockwise from 12 o'clock: measured axes on the top/right, qualitative on the bottom/left.
+    axes_order = [
+        "Quality", "Cost efficiency", "Latency",
+        "Update velocity", "Human-readable surface", "Operational simplicity",
+    ]
+    n = len(axes_order)
+    angles = [i * 2 * math.pi / n for i in range(n)]
+    angles_closed = angles + [angles[0]]
+
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection="polar")
+    ax.set_theta_zero_location("N")
+    ax.set_theta_direction(-1)  # clockwise
+
+    for agent in AGENTS:
+        vals = [radar_data[agent][a] for a in axes_order]
+        vals_closed = vals + [vals[0]]
+        ax.plot(angles_closed, vals_closed, color=AGENT_COLORS[agent], linewidth=2, label=AGENT_LABELS[agent])
+        ax.fill(angles_closed, vals_closed, color=AGENT_COLORS[agent], alpha=0.18)
+
+    ax.set_xticks(angles)
+    ax.set_xticklabels(axes_order, fontsize=10)
+    ax.set_ylim(0, 1.05)
+    ax.set_yticks([0.25, 0.5, 0.75, 1.0])
+    ax.set_yticklabels(["", "", "", ""])
+    ax.legend(loc="upper right", bbox_to_anchor=(1.32, 1.10), fontsize=10)
+    ax.set_title(
+        "Tradeoff shape — outer = better\n"
+        "Measured axes (top/right) min-max normalized across the three agents.\n"
+        "Qualitative axes (bottom/left) are author-scored 0–1.",
+        fontsize=10, y=1.10,
+    )
+
+    plt.tight_layout()
+    plt.savefig(out_path, dpi=140, bbox_inches="tight")
+    plt.close()
+
+
+def _draw_qualitative_heatmap(out_path: Path) -> None:
+    axes = list(QUALITATIVE_SCORES.keys())
+    matrix = [[QUALITATIVE_SCORES[axis][agent] for agent in AGENTS] for axis in axes]
+
+    fig, ax = plt.subplots(figsize=(7.5, 3.5))
+    im = ax.imshow(matrix, cmap="YlGnBu", aspect="auto", vmin=0, vmax=1)
+
+    ax.set_xticks(range(len(AGENTS)))
+    ax.set_xticklabels([AGENT_LABELS[a] for a in AGENTS])
+    ax.set_yticks(range(len(axes)))
+    ax.set_yticklabels([QUALITATIVE_AXIS_LABELS[a] for a in axes])
+
+    for i, axis in enumerate(axes):
+        for j, agent in enumerate(AGENTS):
+            v = matrix[i][j]
+            ax.text(j, i, f"{v:.2f}", ha="center", va="center",
+                    color="white" if v > 0.55 else "black", fontsize=11)
+
+    plt.colorbar(im, ax=ax, label="score (0–1, higher = better)")
+    ax.set_title("Qualitative axes (author-scored, not measured)")
+    plt.tight_layout()
+    plt.savefig(out_path, dpi=140)
+    plt.close()
 
 
 def aggregate(runs_path: Path, judgments_path: Path, out_dir: Path) -> dict:
@@ -23,21 +136,18 @@ def aggregate(runs_path: Path, judgments_path: Path, out_dir: Path) -> dict:
     for r in runs:
         by_key[(r["id"], r["agent"])] = dict(r)
 
-    # de-blind judgments: map agent -> scores
+    # absolute-scoring judgments: direct (id, agent) lookup
     for j in judgments:
-        for letter in ("A", "B"):
-            agent = j[f"{letter.lower()}_agent"]
-            scores = j[letter]
-            key = (j["id"], agent)
-            if key in by_key:
-                by_key[key]["relevance"] = scores.get("relevance")
-                by_key[key]["completeness"] = scores.get("completeness")
-                by_key[key]["groundedness"] = scores.get("groundedness")
-                avg = sum(
-                    s for s in (scores.get("relevance"), scores.get("completeness"), scores.get("groundedness"))
-                    if s is not None
-                ) / 3
-                by_key[key]["quality_avg"] = round(avg, 2)
+        key = (j["id"], j["agent"])
+        if key not in by_key:
+            continue
+        scores = j.get("scores", {})
+        by_key[key]["relevance"] = scores.get("relevance")
+        by_key[key]["completeness"] = scores.get("completeness")
+        by_key[key]["groundedness"] = scores.get("groundedness")
+        present = [s for s in (scores.get("relevance"), scores.get("completeness"), scores.get("groundedness")) if s is not None]
+        if present:
+            by_key[key]["quality_avg"] = round(sum(present) / len(present), 2)
 
     # write master CSV
     fields = [
@@ -74,96 +184,107 @@ def aggregate(runs_path: Path, judgments_path: Path, out_dir: Path) -> dict:
         }
 
     summary = {
-        "overall": {
-            "rag": stats("rag"),
-            "wiki": stats("wiki"),
-        },
+        "overall": {agent: stats(agent) for agent in AGENTS},
         "by_category": {},
     }
     for cat in ["narrow", "branch", "cross-branch"]:
-        summary["by_category"][cat] = {
-            "rag": stats("rag", cat),
-            "wiki": stats("wiki", cat),
+        summary["by_category"][cat] = {agent: stats(agent, cat) for agent in AGENTS}
+
+    # pairwise head-to-head quality on same query
+    summary["head_to_head"] = {}
+    for a, b in combinations(AGENTS, 2):
+        a_wins, b_wins, ties = 0, 0, 0
+        diffs = []
+        for qid in sorted({r["id"] for r in runs}):
+            ra = by_key.get((qid, a))
+            rb = by_key.get((qid, b))
+            if not (ra and rb and ra.get("quality_avg") is not None and rb.get("quality_avg") is not None):
+                continue
+            dq = rb["quality_avg"] - ra["quality_avg"]
+            diffs.append(dq)
+            if abs(dq) < TIE_THRESHOLD:
+                ties += 1
+            elif dq > 0:
+                b_wins += 1
+            else:
+                a_wins += 1
+        summary["head_to_head"][f"{a}_vs_{b}"] = {
+            "a": a, "b": b,
+            "a_wins": a_wins, "b_wins": b_wins, "ties": ties,
+            "mean_quality_diff_b_minus_a": round(st.mean(diffs), 2) if diffs else None,
         }
 
-    # head-to-head quality on same query
-    wins = {"rag": 0, "wiki": 0, "tie": 0}
-    quality_diffs = []
-    for qid in sorted({r["id"] for r in runs}):
-        rag = by_key.get((qid, "rag"))
-        wik = by_key.get((qid, "wiki"))
-        if not (rag and wik and rag.get("quality_avg") is not None and wik.get("quality_avg") is not None):
-            continue
-        dq = wik["quality_avg"] - rag["quality_avg"]
-        quality_diffs.append(dq)
-        if abs(dq) < 0.17:  # treat diffs <0.17 (0.5 on any one axis) as ties
-            wins["tie"] += 1
-        elif dq > 0:
-            wins["wiki"] += 1
-        else:
-            wins["rag"] += 1
-    summary["head_to_head_quality"] = wins
-    summary["quality_diff_mean_wiki_minus_rag"] = round(st.mean(quality_diffs), 2) if quality_diffs else None
-
-    # token ratio
-    r_avg = summary["overall"]["rag"]["avg_total_tokens"]
-    w_avg = summary["overall"]["wiki"]["avg_total_tokens"]
-    summary["wiki_vs_rag_token_ratio"] = round(w_avg / r_avg, 1)
-    summary["wiki_vs_rag_cost_ratio"] = round(
-        summary["overall"]["wiki"]["avg_cost_usd"] / summary["overall"]["rag"]["avg_cost_usd"], 1
-    )
+    # pairwise token / cost ratios (b / a for every ordered pair)
+    summary["pairwise_ratios"] = {}
+    for a in AGENTS:
+        for b in AGENTS:
+            if a == b:
+                continue
+            a_tok = summary["overall"][a].get("avg_total_tokens") or 0
+            b_tok = summary["overall"][b].get("avg_total_tokens") or 0
+            a_cost = summary["overall"][a].get("avg_cost_usd") or 0
+            b_cost = summary["overall"][b].get("avg_cost_usd") or 0
+            summary["pairwise_ratios"][f"{b}_over_{a}"] = {
+                "token_ratio": round(b_tok / a_tok, 2) if a_tok else None,
+                "cost_ratio": round(b_cost / a_cost, 2) if a_cost else None,
+            }
 
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2))
 
     # ---------- charts ----------
     cats = ["narrow", "branch", "cross-branch"]
-    # 1. token comparison bar chart by category
-    fig, ax = plt.subplots(figsize=(8, 5))
-    x = range(len(cats))
-    rag_vals = [summary["by_category"][c]["rag"]["avg_total_tokens"] for c in cats]
-    wiki_vals = [summary["by_category"][c]["wiki"]["avg_total_tokens"] for c in cats]
-    width = 0.38
-    b1 = ax.bar([i - width/2 for i in x], rag_vals, width, label="RAG", color="#d97706")
-    b2 = ax.bar([i + width/2 for i in x], wiki_vals, width, label="Wiki navigation", color="#2563eb")
-    ax.set_xticks(list(x)); ax.set_xticklabels(cats)
+    n_agents = len(AGENTS)
+    total_width = 0.8
+    width = total_width / n_agents
+    x = list(range(len(cats)))
+
+    def offset(i: int) -> float:
+        return (i - (n_agents - 1) / 2) * width
+
+    # 1. tokens by category
+    fig, ax = plt.subplots(figsize=(9, 5))
+    for i, agent in enumerate(AGENTS):
+        vals = [summary["by_category"][c][agent].get("avg_total_tokens", 0) for c in cats]
+        bars = ax.bar([xi + offset(i) for xi in x], vals, width,
+                      label=AGENT_LABELS[agent], color=AGENT_COLORS[agent])
+        for bar in bars:
+            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height(),
+                    f"{int(bar.get_height()):,}", ha="center", va="bottom", fontsize=8)
+    ax.set_xticks(x); ax.set_xticklabels(cats)
     ax.set_ylabel("avg total tokens per query")
     ax.set_title("Tokens per query by category (lower = better)")
     ax.legend()
-    for bars in (b1, b2):
-        for bar in bars:
-            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height(),
-                    f"{int(bar.get_height()):,}", ha="center", va="bottom", fontsize=9)
     plt.tight_layout()
     plt.savefig(out_dir / "tokens_by_category.png", dpi=140)
     plt.close()
 
-    # 2. quality bar chart by category
-    fig, ax = plt.subplots(figsize=(8, 5))
-    rag_q = [summary["by_category"][c]["rag"]["avg_quality"] or 0 for c in cats]
-    wiki_q = [summary["by_category"][c]["wiki"]["avg_quality"] or 0 for c in cats]
-    b1 = ax.bar([i - width/2 for i in x], rag_q, width, label="RAG", color="#d97706")
-    b2 = ax.bar([i + width/2 for i in x], wiki_q, width, label="Wiki navigation", color="#2563eb")
-    ax.set_xticks(list(x)); ax.set_xticklabels(cats)
+    # 2. quality by category
+    fig, ax = plt.subplots(figsize=(9, 5))
+    for i, agent in enumerate(AGENTS):
+        vals = [summary["by_category"][c][agent].get("avg_quality") or 0 for c in cats]
+        bars = ax.bar([xi + offset(i) for xi in x], vals, width,
+                      label=AGENT_LABELS[agent], color=AGENT_COLORS[agent])
+        for bar in bars:
+            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height(),
+                    f"{bar.get_height():.2f}", ha="center", va="bottom", fontsize=8)
+    ax.set_xticks(x); ax.set_xticklabels(cats)
     ax.set_ylabel("avg judge score (1-5)")
     ax.set_ylim(0, 5.2)
     ax.set_title("Answer quality by category (higher = better)")
     ax.legend()
-    for bars in (b1, b2):
-        for bar in bars:
-            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height(),
-                    f"{bar.get_height():.2f}", ha="center", va="bottom", fontsize=9)
     plt.tight_layout()
     plt.savefig(out_dir / "quality_by_category.png", dpi=140)
     plt.close()
 
     # 3. tokens vs quality scatter
-    fig, ax = plt.subplots(figsize=(8, 5))
-    for agent, color in [("rag", "#d97706"), ("wiki", "#2563eb")]:
+    fig, ax = plt.subplots(figsize=(9, 5))
+    for agent in AGENTS:
         pts = [(r["total_tokens"], r.get("quality_avg"))
                for (qid, ag), r in by_key.items() if ag == agent and r.get("quality_avg") is not None]
         ax.scatter([p[0] for p in pts], [p[1] for p in pts],
-                   c=color, label=agent.upper(), alpha=0.75, s=60, edgecolors="white")
-    ax.set_xlabel("total tokens per query")
+                   c=AGENT_COLORS[agent], label=AGENT_LABELS[agent],
+                   alpha=0.75, s=60, edgecolors="white")
+    ax.set_xlabel("total tokens per query (log)")
     ax.set_ylabel("judge quality score (1-5)")
     ax.set_title("Tokens vs. quality — each point is one query")
     ax.set_xscale("log")
@@ -172,6 +293,18 @@ def aggregate(runs_path: Path, judgments_path: Path, out_dir: Path) -> dict:
     plt.tight_layout()
     plt.savefig(out_dir / "tokens_vs_quality.png", dpi=140)
     plt.close()
+
+    # 4. tradeoff radar (3 measured + 3 qualitative axes)
+    radar_data = _tradeoff_radar_data(summary)
+    _draw_radar(radar_data, summary["overall"], out_dir / "tradeoff_radar.png")
+    summary["radar_data"] = radar_data
+
+    # 5. qualitative-axes heatmap (close-up of the 3 scored axes)
+    _draw_qualitative_heatmap(out_dir / "qualitative_heatmap.png")
+    summary["qualitative_scores"] = QUALITATIVE_SCORES
+
+    # rewrite summary.json now that radar/qualitative fields are attached
+    (out_dir / "summary.json").write_text(json.dumps(summary, indent=2))
 
     return summary
 

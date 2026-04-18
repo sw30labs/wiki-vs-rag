@@ -1,4 +1,4 @@
-"""Run both pipelines over the eval query set.
+"""Run all three agent pipelines over the eval query set.
 
 Writes one jsonl line per (query, agent) run.
 """
@@ -9,6 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from rag.agent import answer as rag_answer
 from wiki.agent import answer as wiki_answer
+from rag_agentic.agent import answer as agentic_answer
 
 BUDGET_USD = 10.0
 
@@ -20,13 +21,13 @@ def run_all(queries_path: Path, corpus_root: Path, index_dir: Path, sitemap_md: 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     f = open(out_path, "w")
 
-    stats = {"rag": [], "wiki": []}
+    stats = {"rag": [], "wiki": [], "rag_agentic": []}
 
     for q in queries:
         qid = q["id"]
         print(f"[{qid}][{q['category']}] {q['query'][:80]}")
 
-        # RAG
+        # RAG (single-shot)
         r = rag_answer(q["query"], index_dir)
         spent += r.cost_usd
         rec = {
@@ -48,7 +49,33 @@ def run_all(queries_path: Path, corpus_root: Path, index_dir: Path, sitemap_md: 
         f.write(json.dumps(rec) + "\n")
         f.flush()
         stats["rag"].append(rec)
-        print(f"  RAG  tok={rec['total_tokens']:5d}  turns={r.turns}  ${r.cost_usd:.4f}  {r.latency_s}s")
+        print(f"  RAG      tok={rec['total_tokens']:5d}  turns={r.turns}  ${r.cost_usd:.4f}  {r.latency_s}s")
+
+        # AGENTIC-RAG
+        a = agentic_answer(q["query"], corpus_root, index_dir)
+        spent += a.cost_usd
+        rec = {
+            "id": qid,
+            "category": q["category"],
+            "query": q["query"],
+            "ground_truth": q["sources"],
+            "agent": "rag_agentic",
+            "answer": a.answer,
+            "retrieved_queries": a.retrieved_queries,
+            "pages_read": a.pages_read,
+            "input_tokens": a.input_tokens,
+            "output_tokens": a.output_tokens,
+            "embed_tokens": a.embed_tokens,
+            "total_tokens": a.input_tokens + a.output_tokens,
+            "turns": a.turns,
+            "cost_usd": a.cost_usd,
+            "latency_s": a.latency_s,
+            "hit_turn_cap": a.hit_turn_cap,
+        }
+        f.write(json.dumps(rec) + "\n")
+        f.flush()
+        stats["rag_agentic"].append(rec)
+        print(f"  AGENTIC  tok={rec['total_tokens']:5d}  turns={a.turns}  retr={len(a.retrieved_queries)}  pages={len(a.pages_read)}  ${a.cost_usd:.4f}  {a.latency_s}s")
 
         # WIKI
         w = wiki_answer(q["query"], corpus_root, sitemap)
@@ -72,7 +99,7 @@ def run_all(queries_path: Path, corpus_root: Path, index_dir: Path, sitemap_md: 
         f.write(json.dumps(rec) + "\n")
         f.flush()
         stats["wiki"].append(rec)
-        print(f"  WIKI tok={rec['total_tokens']:5d}  turns={w.turns}  pages={len(w.pages_read)}  ${w.cost_usd:.4f}  {w.latency_s}s")
+        print(f"  WIKI     tok={rec['total_tokens']:5d}  turns={w.turns}  pages={len(w.pages_read)}  ${w.cost_usd:.4f}  {w.latency_s}s")
 
         if spent > BUDGET_USD:
             print(f"!!! BUDGET EXCEEDED (${spent:.2f}), aborting")
@@ -82,8 +109,10 @@ def run_all(queries_path: Path, corpus_root: Path, index_dir: Path, sitemap_md: 
     summary = {
         "n": len(queries),
         "rag_total_cost": round(sum(r["cost_usd"] for r in stats["rag"]), 4),
+        "rag_agentic_total_cost": round(sum(r["cost_usd"] for r in stats["rag_agentic"]), 4),
         "wiki_total_cost": round(sum(r["cost_usd"] for r in stats["wiki"]), 4),
         "rag_avg_tokens": round(sum(r["total_tokens"] for r in stats["rag"]) / max(1, len(stats["rag"]))),
+        "rag_agentic_avg_tokens": round(sum(r["total_tokens"] for r in stats["rag_agentic"]) / max(1, len(stats["rag_agentic"]))),
         "wiki_avg_tokens": round(sum(r["total_tokens"] for r in stats["wiki"]) / max(1, len(stats["wiki"]))),
     }
     (out_path.parent / "run_summary.json").write_text(json.dumps(summary, indent=2))

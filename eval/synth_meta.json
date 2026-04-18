@@ -5,8 +5,8 @@
     "branch": 10,
     "cross-branch": 10
   },
-  "synth_input_tokens": 49083,
-  "synth_output_tokens": 3920,
-  "synth_cost_usd": 1.0302,
-  "model": "claude-opus-4-6"
+  "synth_input_tokens": 68497,
+  "synth_output_tokens": 4284,
+  "synth_cost_usd": 1.3488,
+  "model": "claude-opus-4-7"
 }

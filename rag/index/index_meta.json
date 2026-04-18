@@ -4,7 +4,7 @@
   "corpus_tokens": 45048,
   "embedding_tokens": 45048,
   "embedding_cost_usd": 0.000901,
-  "wall_seconds": 9.68,
+  "wall_seconds": 9.12,
   "model": "text-embedding-3-small",
   "dim": 1536
 }
