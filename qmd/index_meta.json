@@ -1,0 +1,15 @@
+{
+  "collection": "wiki-vs-rag",
+  "n_files": 89,
+  "corpus_tokens": 45242,
+  "staging_dir": "qmd/staging",
+  "stage_wall_seconds": 0.05,
+  "collection_add_wall_seconds": 0.77,
+  "embed_wall_seconds": 7.8,
+  "wall_seconds_total": 8.62,
+  "qmd_cache_dir": "/Users/spider/.cache/qmd",
+  "gguf_models_bytes": 328576992,
+  "qmd_cache_total_bytes": 332505056,
+  "embedding_cost_usd": 0.0,
+  "note": "QMD retrieval is fully local (BM25 + EmbeddingGemma + Qwen3 reranker). Per-query API cost is Sonnet-only. Model download ~2GB GGUF on first embed."
+}

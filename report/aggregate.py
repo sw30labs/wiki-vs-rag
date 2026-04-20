@@ -9,18 +9,19 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-AGENTS = ["rag", "rag_agentic", "wiki"]
-AGENT_LABELS = {"rag": "RAG", "rag_agentic": "Agentic-RAG", "wiki": "Wiki nav"}
-AGENT_COLORS = {"rag": "#d97706", "rag_agentic": "#059669", "wiki": "#2563eb"}
+AGENTS = ["rag", "rag_agentic", "wiki", "qmd"]
+AGENT_LABELS = {"rag": "RAG", "rag_agentic": "Agentic-RAG", "wiki": "Wiki nav", "qmd": "QMD"}
+AGENT_COLORS = {"rag": "#d97706", "rag_agentic": "#059669", "wiki": "#2563eb", "qmd": "#7c3aed"}
 TIE_THRESHOLD = 0.17  # ≈0.5 on any one axis; matches original setting
 
 # Qualitative scores for axes the benchmark does NOT measure. 0-1, higher=better.
 # wiki is the natural winner on all three (infra-free, human-readable, git-push updates).
 # rag and rag_agentic share the same FAISS/embedding substrate, so they score the same.
+# qmd is local-hybrid: self-contained (no embedding API) but still SQLite + 2GB GGUF.
 QUALITATIVE_SCORES = {
-    "operational_simplicity": {"rag": 0.25, "rag_agentic": 0.25, "wiki": 1.0},
-    "human_readable_surface": {"rag": 0.10, "rag_agentic": 0.10, "wiki": 1.0},
-    "update_velocity":        {"rag": 0.20, "rag_agentic": 0.20, "wiki": 1.0},
+    "operational_simplicity": {"rag": 0.25, "rag_agentic": 0.25, "wiki": 1.0, "qmd": 0.45},
+    "human_readable_surface": {"rag": 0.10, "rag_agentic": 0.10, "wiki": 1.0, "qmd": 0.10},
+    "update_velocity":        {"rag": 0.20, "rag_agentic": 0.20, "wiki": 1.0, "qmd": 0.50},
 }
 QUALITATIVE_AXIS_LABELS = {
     "operational_simplicity": "Operational simplicity",

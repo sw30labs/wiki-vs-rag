@@ -10,8 +10,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from rag.agent import answer as rag_answer
 from wiki.agent import answer as wiki_answer
 from rag_agentic.agent import answer as agentic_answer
+from qmd.agent import answer as qmd_answer
 
 BUDGET_USD = 10.0
+QMD_COLLECTION = "wiki-vs-rag"
 
 
 def run_all(queries_path: Path, corpus_root: Path, index_dir: Path, sitemap_md: Path, out_path: Path) -> dict:
@@ -21,7 +23,7 @@ def run_all(queries_path: Path, corpus_root: Path, index_dir: Path, sitemap_md: 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     f = open(out_path, "w")
 
-    stats = {"rag": [], "wiki": [], "rag_agentic": []}
+    stats = {"rag": [], "wiki": [], "rag_agentic": [], "qmd": []}
 
     for q in queries:
         qid = q["id"]
@@ -101,6 +103,31 @@ def run_all(queries_path: Path, corpus_root: Path, index_dir: Path, sitemap_md: 
         stats["wiki"].append(rec)
         print(f"  WIKI     tok={rec['total_tokens']:5d}  turns={w.turns}  pages={len(w.pages_read)}  ${w.cost_usd:.4f}  {w.latency_s}s")
 
+        # QMD (single-shot, local hybrid retrieval → Sonnet synth)
+        m = qmd_answer(q["query"], collection=QMD_COLLECTION)
+        spent += m.cost_usd
+        rec = {
+            "id": qid,
+            "category": q["category"],
+            "query": q["query"],
+            "ground_truth": q["sources"],
+            "agent": "qmd",
+            "answer": m.answer,
+            "retrieved_paths": m.retrieved_paths,
+            "input_tokens": m.input_tokens,
+            "output_tokens": m.output_tokens,
+            "embed_tokens": m.embed_tokens,
+            "total_tokens": m.input_tokens + m.output_tokens,
+            "turns": m.turns,
+            "cost_usd": m.cost_usd,
+            "latency_s": m.latency_s,
+            "retrieval_latency_s": m.retrieval_latency_s,
+        }
+        f.write(json.dumps(rec) + "\n")
+        f.flush()
+        stats["qmd"].append(rec)
+        print(f"  QMD      tok={rec['total_tokens']:5d}  turns={m.turns}  retr={m.retrieval_latency_s}s  ${m.cost_usd:.4f}  {m.latency_s}s")
+
         if spent > BUDGET_USD:
             print(f"!!! BUDGET EXCEEDED (${spent:.2f}), aborting")
             break
@@ -111,9 +138,11 @@ def run_all(queries_path: Path, corpus_root: Path, index_dir: Path, sitemap_md: 
         "rag_total_cost": round(sum(r["cost_usd"] for r in stats["rag"]), 4),
         "rag_agentic_total_cost": round(sum(r["cost_usd"] for r in stats["rag_agentic"]), 4),
         "wiki_total_cost": round(sum(r["cost_usd"] for r in stats["wiki"]), 4),
+        "qmd_total_cost": round(sum(r["cost_usd"] for r in stats["qmd"]), 4),
         "rag_avg_tokens": round(sum(r["total_tokens"] for r in stats["rag"]) / max(1, len(stats["rag"]))),
         "rag_agentic_avg_tokens": round(sum(r["total_tokens"] for r in stats["rag_agentic"]) / max(1, len(stats["rag_agentic"]))),
         "wiki_avg_tokens": round(sum(r["total_tokens"] for r in stats["wiki"]) / max(1, len(stats["wiki"]))),
+        "qmd_avg_tokens": round(sum(r["total_tokens"] for r in stats["qmd"]) / max(1, len(stats["qmd"]))),
     }
     (out_path.parent / "run_summary.json").write_text(json.dumps(summary, indent=2))
     return summary

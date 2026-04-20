@@ -1,8 +1,8 @@
 {
-  "judge_input_tokens": 230034,
-  "judge_output_tokens": 7060,
-  "judge_cost_usd": 3.98,
+  "judge_input_tokens": 300917,
+  "judge_output_tokens": 9984,
+  "judge_cost_usd": 5.2626,
   "model": "claude-opus-4-7",
-  "n_scored": 90,
+  "n_scored": 120,
   "n_parse_failures": 0
 }

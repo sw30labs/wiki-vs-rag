@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 report/.cache/
 _private/
+qmd/staging/
