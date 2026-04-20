@@ -4,7 +4,7 @@
 
 This repo is the reproducible source for those numbers.
 
-> **Thanks to [Thomas De Souza](https://www.linkedin.com/in/ACoAAABPSp8BvNatjJFNW0LPxj2veG_xn_L9dpo)** for flagging [tobi/qmd](https://github.com/tobi/qmd) and framing it as *"kind of like AI grep"* — which turns out to be exactly the right framing, as the numbers below show.
+> **Origin story:** I came across [qmd](https://github.com/tobi/qmd) after reading that [Tobi Lütke](https://github.com/tobi) — Shopify's CEO — had been [building it in the open himself](https://x.com/tobi/status/2028580097700057404), alongside a broader push to make [AI a "fundamental expectation" at Shopify](https://www.fastcompany.com/91312832/shopify-ceo-tobi-lutke-ai-is-now-a-fundamental-expectation-for-employees). A sitting $150B-company CEO shipping a local-first retrieval CLI on the side was too good an arm to leave out of the benchmark — and the numbers below are where it earns its keep.
 
 - **Corpus:** `github.com/sw30labs/.github.wiki` pinned at commit `c130a3b` (89 markdown files, ~45 K corpus tokens)
 - **Agent model:** Claude Sonnet 4.6 (temp 0) for all four pipelines
@@ -252,4 +252,4 @@ wiki-vs-rag/
 
 Nicolas Cravino · [sw30labs](https://github.com/sw30labs) · 2026-04-20
 
-*The QMD arm was added after [Thomas De Souza](https://www.linkedin.com/in/ACoAAABPSp8BvNatjJFNW0LPxj2veG_xn_L9dpo) suggested [tobi/qmd](https://github.com/tobi/qmd) — "kind of like AI grep" — as an interesting fourth benchmark. He was right on both counts.*
+*The QMD arm was added after I stumbled on [tobi/qmd](https://github.com/tobi/qmd) — built in the open by Shopify's CEO [Tobi Lütke](https://github.com/tobi). The results above are what happens when you actually benchmark it against single-shot RAG, agentic-RAG, and wiki navigation on the same corpus.*
