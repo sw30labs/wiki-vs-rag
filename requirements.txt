@@ -1,7 +1,7 @@
-openai>=1.50
-anthropic>=0.40
-faiss-cpu>=1.7
-tiktoken>=0.7
-pyyaml>=6.0
-numpy>=1.26
-matplotlib>=3.8
+openai==3.45.0
+anthropic==2.4.0
+faiss-cpu==1.15.1
+tiktoken==0.14.0
+pyyaml==6.0.3
+numpy==2.5.4
+matplotlib==3.11.2
