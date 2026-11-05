@@ -5,3 +5,4 @@ tiktoken==0.14.0
 pyyaml==6.0.3
 numpy==2.5.4
 matplotlib==3.11.2
+requests==2.33.0  # VulnOps CVE-2026-25645: transitive dependency floor
